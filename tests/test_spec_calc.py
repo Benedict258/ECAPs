@@ -28,3 +28,9 @@ def test_proposed_models_fit_proposed_memory():
 def test_table_renders():
     t = s.model_table()
     assert "Node Hub" in t and t.count("\n") == 4
+
+
+def test_reported_sun_hours_sensitivity():
+    assert s.SUN_HOURS_REPORTED["Abuja (old NIMET data)"] == 4.85 and s.SUN_HOURS_REPORTED["Jos (old NIMET data)"] == 5.11
+    assert s.solar_example(sun_hours=4.85)["panel_w"] == pytest.approx(141.38, abs=0.01)
+    assert s.solar_example(sun_hours=5.11)["panel_w"] == pytest.approx(134.19, abs=0.01)

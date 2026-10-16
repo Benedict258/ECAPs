@@ -38,24 +38,35 @@ The Hub's "many users via batching" and the Node's "1-5 users" are targets: batc
 and none of this has been measured or built.
 
 ## Solar sizing example (illustrative)
-Example for a continuously running 20 W node, with the assumptions stated:
+Example for a continuously running 20 W node, with the assumptions stated. Printed by `python -m ecaps.spec_calc`:
 ```
 daily energy = 20 W x 24 h = 480 Wh/day
 battery = 480 / 0.8 = 600 Wh
 panel = 480 / (5 x 0.7) = 137.1 W
-
+same sizing with the reported sun-hour figures (Abuja-area estimate, old data):
+  Abuja (old NIMET data): 4.85 h -> panel = 480 / (4.85 x 0.7) = 141.4 W
+  Jos (old NIMET data): 5.11 h -> panel = 480 / (5.11 x 0.7) = 134.2 W
 ```
+The base example keeps **5 peak sun hours per day as a stated assumption**.
+
+**Reported sun-hour data (Abuja-area estimate, old data).** An old NIMET 1971-1980 dataset, reported in a 2012 paper (aijcrnet.com, Vol 2 No 6),
+gives about 4.85 kWh/m2/day for Abuja and about 5.11 for Jos. Numerically these are about 4.85 and 5.11 peak sun hours
+(1 kWh/m2/day is 1 peak sun hour). They are **old data** and **Abuja-area / Jos figures only: this repo has no figure for the deployment site**.
+These values were supplied by Benedict; the paper was not read while building this repo, and its full citation (authors, title, URL) still needs to be added.
+With these figures the example panel size comes out at about 141 W (4.85 h) and about 134 W (5.11 h) instead of about 137 W (5 h): the 5 h assumption
+is in the same range as the old data, which says nothing about current conditions or the actual site.
+
 Assumptions, all of which are placeholders to replace with sourced values:
 - the node draws a constant 20 W for 24 h (a real duty cycle may be lower or higher);
-- **5 peak-sun-hours per day is an assumption. The figure for Minna must be sourced** (for example from a solar-resource dataset) and the sizing redone;
+- 5 peak sun hours per day is an assumption; replace it with a sourced, current value for the actual deployment site and redo the sizing;
 - 0.7 combined efficiency for panel, charge controller and wiring losses, and 0.8 usable battery fraction (this depends on battery chemistry and age);
 - one day of autonomy only (no cloudy-day margin), no inverter losses, no temperature derating, no margin for panel ageing.
 
-The 137 W panel and 600 Wh battery are therefore example sizes under those assumptions, not a recommendation. A 20 W power figure is itself
+The panel and battery sizes are therefore example sizes under those assumptions, not a recommendation. A 20 W power figure is itself
 a proposed target; it has not been measured on any hardware.
 
 ## Open items
 - Verify power draw by measurement on real hardware (not possible on the stand-in PC without a power meter; this repo does not measure watts).
-- Source sun-hours for the deployment site.
+- Source current sun-hours for the actual deployment site, and add the full citation for the old NIMET figures.
 - Measure real memory bandwidth and compare against the ceiling.
 - Check the users-per-node targets with a real batching test.

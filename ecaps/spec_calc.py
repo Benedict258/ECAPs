@@ -32,6 +32,12 @@ def panel_w(daily_wh: float, sun_hours: float = 5.0, efficiency: float = 0.7) ->
     return daily_wh / (sun_hours * efficiency)
 
 
+# Sun-hour figures SUPPLIED by Benedict from an old dataset (NIMET 1971-1980, reported in a 2012 paper at aijcrnet.com, Vol 2 No 6).
+# 1 kWh/m2/day is numerically 1 peak sun hour. Abuja-area estimate, OLD data. There is NO figure for the deployment site.
+# The paper itself has not been read in this repo's build environment. The sizing default stays at the stated 5 h assumption.
+SUN_HOURS_REPORTED = {"Abuja (old NIMET data)": 4.85, "Jos (old NIMET data)": 5.11}
+
+
 # (name, params range in B, memory GB, bandwidth GB/s range, power W range)
 PROPOSED = [
     ("Node Mini", (1, 3), "2-4", (25, 50), "3-5"),
@@ -73,3 +79,7 @@ if __name__ == "__main__":
     print(f"daily energy = {s['watts']:.0f} W x 24 h = {s['daily_wh']:.0f} Wh/day")
     print(f"battery = {s['daily_wh']:.0f} / {s['usable_fraction']} = {s['battery_wh']:.0f} Wh")
     print(f"panel = {s['daily_wh']:.0f} / ({s['sun_hours']:.0f} x {s['efficiency']}) = {s['panel_w']:.1f} W")
+    print("same sizing with the reported sun-hour figures (Abuja-area estimate, old data):")
+    for place, h in SUN_HOURS_REPORTED.items():
+        e = solar_example(sun_hours=h)
+        print(f"  {place}: {h} h -> panel = {e['daily_wh']:.0f} / ({h} x {e['efficiency']}) = {e['panel_w']:.1f} W")

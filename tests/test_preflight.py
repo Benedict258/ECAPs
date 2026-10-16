@@ -64,5 +64,13 @@ def test_never_opens_network(tmp_path, monkeypatch):
 
 
 def test_cli_exit_code_nonzero_when_failing(monkeypatch, capsys):
-    monkeypatch.setattr(preflight, "run_preflight", lambda rig: ([preflight.Check("x", "FAIL", "y")], False))
+    monkeypatch.setattr(preflight, "run_preflight", lambda rig, tiers=None: ([preflight.Check("x", "FAIL", "y")], False))
     assert preflight.main([]) == 3 and "RESULT: FAIL" in capsys.readouterr().out
+
+
+def test_partial_run_only_needs_selected_models(tmp_path):
+    r = rig_in(tmp_path, with_models=False)
+    gguf_path(CATALOG[0], "q4", str(tmp_path / "models")).write_bytes(b"GGUF" + b"\0" * 100)
+    _, ok_small = preflight.run_preflight(r, tiers=[CATALOG[0]], **good(ram_total_gb=16))
+    _, ok_all = preflight.run_preflight(r, **good(ram_total_gb=16))
+    assert ok_small and not ok_all

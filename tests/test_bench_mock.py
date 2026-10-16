@@ -24,7 +24,7 @@ def test_mock_pipeline_end_to_end():
 
 def test_real_mode_refuses_without_models(capsys, monkeypatch):
     from bench.preflight import Check
-    monkeypatch.setattr(run_all, 'run_preflight', lambda rig: ([Check('fake', 'FAIL', 'missing')], False))
+    monkeypatch.setattr(run_all, 'run_preflight', lambda rig, tiers=None: ([Check('fake', 'FAIL', 'missing')], False))
     assert run_all.main([]) == 3
     assert "Nothing was downloaded" in capsys.readouterr().err
 
@@ -39,3 +39,26 @@ def test_b4_mock_results_shape_and_proxy_label():
     assert "PROXY" in b4["note"]
     text = (d / "summary.md").read_text()
     assert "## B4 Power modes" in text and "no energy saving is claimed" in text
+
+
+def test_required_tiers_for_partial_runs():
+    names = lambda only: {t.name for t in run_all.required_tiers(only)}
+    assert names("b1,b3") == {"qwen2.5-1.5b-instruct"}
+    assert len(names("b2")) == 3 and len(names("all")) == 3
+    assert names("b4") == {"qwen2.5-1.5b-instruct", "phi-3.5-mini-instruct"}   # eco + normal at the default 4 GB budget
+
+
+def test_unknown_experiment_rejected():
+    import pytest
+    with pytest.raises(SystemExit): run_all.parse_only("b9")
+
+
+def test_only_flag_runs_subset_and_summary_lists_not_run(tmp_path, monkeypatch):
+    import bench.common as c
+    monkeypatch.setattr(c, "ROOT", tmp_path)               # isolate output from the shared results_dummy
+    assert run_all.main(["--mock", "--only", "b1,b3"]) == 0
+    d = tmp_path / "results_dummy"
+    assert (d / "b1_overhead.json").exists() and (d / "b3_offline.json").exists()
+    assert not (d / "b2_autofit.json").exists() and not (d / "b4_power.json").exists()
+    txt = (d / "summary.md").read_text()
+    assert "B2 auto-fit / F2: not run" in txt and "B4 power modes / F4: not run" in txt

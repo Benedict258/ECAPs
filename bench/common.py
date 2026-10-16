@@ -106,8 +106,14 @@ class RealRig:
     name = "llama-server"
 
     def __init__(self, binary: str | None = None, models_dir: str = "models", quant: str = "q4", port: int = 8089):
-        self.binary = binary or os.environ.get("LLAMA_SERVER", str(ROOT / "bin" / "llama-server"))
+        self.binary = binary or os.environ.get("LLAMA_SERVER") or self._default_binary()
         self.models_dir, self.quant, self.port = models_dir, quant, port
+
+    @staticmethod
+    def _default_binary() -> str:
+        base = ROOT / "bin" / "llama-server"
+        exe = base.with_name("llama-server.exe")
+        return str(exe if (os.name == "nt" or exe.exists()) and not base.exists() else base)
 
     def missing(self, tiers) -> list[str]:
         miss = [] if Path(self.binary).exists() else [f"llama-server binary: {self.binary}"]

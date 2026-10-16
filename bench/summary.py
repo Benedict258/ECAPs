@@ -55,8 +55,9 @@ def write(mock: bool) -> str:
         L += ["", "*Caption F4:* Same 20 tasks in each power mode (threads, max output tokens, context size and model tier change by mode; battery level is simulated). "
               "CPU-seconds per task is a proxy for energy, not a measurement of it.", ""]
     L += ["## Not run"]
-    if not b4:
-        L += ["- B4 / F4 power modes: no results file present."]
+    for name, res in (("B1 overhead / F1", b1), ("B2 auto-fit / F2", b2), ("B3 offline loop / F3", b3), ("B4 power modes / F4", b4)):
+        if not res:
+            L += [f"- {name}: not run (no results file present)."]
     L += ["- Node discovery / request routing and the offline sync queue: not built.",
           "- Serial/ESP32 adapter: tested only against an in-memory fake port; no real ESP32 test was run.",
           "- Management API (/status /models /metrics): functional tests only; not benchmarked.",

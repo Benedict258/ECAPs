@@ -38,3 +38,11 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
 - **Out of scope this session** (not built): node discovery/routing, offline sync queue, MQTT adapter.
 - **Mock realism.** The mock does not model mode differences (threads/context) in speed or CPU, so dummy B4 bars look similar
   across modes. That is expected; real differences can only come from the owner's run.
+
+## Run control and preflight
+- `bench.run_all --only b1,b3` runs a subset; earlier results files are kept, and `summary.md` lists any experiment without a results file
+  as "not run". B1 and B3 use the smallest tier by default (`--b3-tier` overrides); an earlier version of the code used the budget pick for B3,
+  which contradicted these notes, so it was changed to the smallest tier.
+- `bench.preflight` (also run first in real mode, for only the models the selected experiments need) checks files, GGUF headers, disk,
+  RAM and swap, prints PASS/FAIL/WARN, and never downloads. Low RAM or swap is a WARN, not a FAIL: the run is allowed but the user is told.
+  File sizes for models that are missing are estimates (params x 0.6 bytes), labelled as such.

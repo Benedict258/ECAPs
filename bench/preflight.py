@@ -28,7 +28,7 @@ class Check:
 def _gib(b: float) -> str: return f"{b / GB:.2f} GB"
 
 
-def run_preflight(rig: RealRig | None = None, free_disk_gb: float | None = None,
+def run_preflight(rig: RealRig | None = None, tiers=None, free_disk_gb: float | None = None,
                   ram_available_gb: float | None = None, ram_total_gb: float | None = None,
                   swap_used_gb: float | None = None) -> tuple[list[Check], bool]:
     """Returns (checks, ok). ok is False if any check is FAIL (WARN does not fail)."""
@@ -45,7 +45,7 @@ def run_preflight(rig: RealRig | None = None, free_disk_gb: float | None = None,
         add("llama-server binary", "FAIL", f"not found at {b} (put it at bin/llama-server[.exe] or set LLAMA_SERVER)")
 
     total_est = 0.0
-    for t in sorted(CATALOG, key=lambda t: t.params_b):
+    for t in sorted(tiers or CATALOG, key=lambda t: t.params_b):
         p = gguf_path(t, rig.quant, rig.models_dir)
         est = t.params_b * EST_BYTES_PER_PARAM_Q4 * 1e9
         total_est += est
@@ -100,8 +100,12 @@ def render(checks: list[Check], ok: bool) -> str:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quant", default="q4")
+    ap.add_argument("--llama-server", help="path to the llama-server binary (else $LLAMA_SERVER, else bin/)")
+    ap.add_argument("--models-dir", default="models")
+    ap.add_argument("--only", default="all", help="comma list of b1,b2,b3,b4 (default all): only needed models are checked")
     a = ap.parse_args(argv)
-    checks, ok = run_preflight(RealRig(quant=a.quant))
+    from bench.run_all import required_tiers
+    checks, ok = run_preflight(RealRig(a.llama_server, a.models_dir, a.quant), required_tiers(a.only, a.quant))
     print(render(checks, ok))
     return 0 if ok else 3
 

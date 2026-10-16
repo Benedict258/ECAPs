@@ -7,7 +7,7 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
   Mock timings are not measurements. Real numbers only come from `python -m bench.run_all` on the owner's PC.
 - **Dummy output is separate.** Anything produced with the mock goes to `results_dummy/` and is watermarked DUMMY.
   `results/` is reserved for real runs.
-- **No HTTP deps.** The llama-server backend uses stdlib `urllib` to keep dependencies to psutil, matplotlib, pytest.
+- **No HTTP deps.** The llama-server backend uses stdlib `urllib` to keep dependencies to psutil, matplotlib, pytest (plus optional pyserial and paho-mqtt for the device adapters).
 - **Git author.** Commits are authored as Benedict Isaac with no AI attribution (Honesty Rule 8).
 - **Memory estimate follows the brief literally** (4-bit = 0.5 bytes/weight). Real Q4_K_M files are closer to ~0.6 bytes/weight,
   so B2 measures peak RSS and reports honestly whether each pick stays under budget.
@@ -82,3 +82,19 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
   non-finite messages and unknown topics are dropped and counted.
 - **Tested only against an in-memory fake broker and fake device.** The paho wrapper is only tested for a clean error when the broker is unreachable and when paho is missing;
   it has not talked to a real broker. No TLS is configured, so use only on a trusted local network. The topic scheme is this project's own and no real device implements it yet.
+
+## Security status (no authentication or TLS yet)
+Authentication and TLS were deliberately **not** added in this phase; the README has the per-component table. In short: the management API and the cluster
+endpoint bind to 127.0.0.1 by default and are unauthenticated; cluster announcements can be spoofed on a LAN and the optional shared token travels in clear text;
+MQTT and the serial link have no transport security; cloud sync is off unless configured and its token is only protected with an `https://` URL; the SQLite files are unencrypted;
+models and binaries are not checksum-verified by this repo. The agent can only execute the four registered tools with validated, length-limited arguments. No security review has been done.
+
+## Poster assets and wording rules
+- `assets/make_diagrams.py` generates three concept diagrams (node family, software stack, edge-cloud collaboration) with **no results and no spec numbers**; a test
+  rejects spec/result units in their text. Everything is labelled PROPOSED or with its verification status. The software-stack diagram is the single source for the stack
+  picture (`bench/figures.py` calls it). The edge-cloud diagram shows design intent: cloud escalation is a stub, off by default.
+- `docs/POSTER_FIGURE_SLOTS.md` lists the result slots (F1-F4), the command and footer for each, the DUMMY rule and a drop-in checklist; `bench/check_results.py` checks the bookkeeping
+  (DUMMY flags, files, commit hash) but cannot judge whether results are good.
+- Solar example: the base case keeps **5 peak sun hours as a stated assumption**. Old NIMET 1971-1980 figures (reported in a 2012 paper, supplied by Benedict, paper not read here)
+  are quoted as an *Abuja-area estimate, old data* (about 4.85 and 5.11 for Abuja and Jos); there is no figure for the deployment site, and none is implied.
+- Licences are recorded in `docs/MODELS.md` with model-card URLs and the check date (17 Oct 2026, relayed by Benedict). The release file names in `docs/RUN_ON_PC.md` are marked unverified.

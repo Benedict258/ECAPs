@@ -56,3 +56,18 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
 - `HttpCloudSink` POSTs `{"records": [...]}` with an optional bearer token (`ECAPS_CLOUD_TOKEN` env var, never stored or logged) and only accepts http/https URLs.
   It is tested only against a localhost server; no real cloud service was used. The cloud **LLM fallback** in the agent is a separate, still-unimplemented stub.
 - The queue grows without bound while offline (no size cap or pruning yet), and sent rows are not deleted.
+
+## Node discovery and routing (prototype, localhost-tested only)
+- `ecaps/cluster.py`. **Scope: more nodes serve more users.** Each request is served whole by one node; a busy node may hand it to a
+  less-busy peer. A model is never split across nodes (not implemented, not claimed).
+- Discovery: UDP announcements (`{magic, id, port, load}`) to the LAN broadcast address by default, or to explicit `host:port` targets
+  (`--peer`, used in tests). mDNS was not implemented (UDP broadcast is simpler and needs no dependency). A peer's host is taken from the
+  packet's **source IP**, not from the payload; malformed or foreign packets are ignored; entries expire after a TTL.
+- Routing rule: a node forwards a request only if it already has work in flight and some peer announced **strictly less** load; otherwise it serves
+  locally. A forwarded request carries a hop header and is never forwarded again (no loops). If forwarding fails the node serves it locally and
+  drops that peer until it is heard again. Load = requests queued or running; capacity defaults to 1.
+- Tested with three separate Python processes on 127.0.0.1 (discovery, hand-off under concurrent load, a peer dying mid-run) and with a loopback
+  broadcast test (skipped where `SO_REUSEPORT` is missing, e.g. Windows). **Not tested on a real LAN, across subnets, with firewalls, with more than three nodes, or with real models.**
+- Known limitations: load figures are up to one announce interval stale (so bursts can pile onto one peer); no authentication of announcements;
+  the optional shared token is sent in clear over HTTP; no TLS; the generate endpoint binds to 127.0.0.1 unless `--host` is changed deliberately;
+  no fairness or queue limits beyond a body-size and max-token cap. Throughput gains were **not measured**.

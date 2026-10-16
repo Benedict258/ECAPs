@@ -57,7 +57,10 @@ def write(mock: bool) -> str:
     L += ["## Not run"]
     if not b4:
         L += ["- B4 / F4 power modes: no results file present."]
-    L += ["- Node discovery / request routing and the offline sync queue: out of scope, not built."]
+    L += ["- Node discovery / request routing and the offline sync queue: not built.",
+          "- Serial/ESP32 adapter: tested only against an in-memory fake port; no real ESP32 test was run.",
+          "- Management API (/status /models /metrics): functional tests only; not benchmarked.",
+          "- Energy: not measured. CPU-seconds is a proxy; no energy saving is claimed."]
     p = out_dir(mock) / "summary.md"
     p.write_text("\n".join(L) + "\n")
     return str(p)

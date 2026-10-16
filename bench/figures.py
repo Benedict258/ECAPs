@@ -125,19 +125,19 @@ def stack_diagram(mock):
                                    ec="black", lw=2, ls="--" if dashed else "-"))
         ax.text(x + w / 2, y + h / 2, t, ha="center", va="center", fontsize=16, fontweight="bold",
                 color="white" if not dashed else "black")
-    box(1, 7, 6, 1.2, "Device interface\n(simulated feed; ESP32 planned)", BLUE)
+    box(1, 7, 6, 1.2, "Device interface\n(simulated default; serial/ESP32 adapter)", BLUE)
     box(1, 5.2, 6, 1.2, "Agent runtime  sense → plan → act", GREEN)
     box(1, 3.4, 6, 1.2, "Model manager (memory auto-fit)", ORANGE)
     box(1, 1.6, 6, 1.2, "Backend: llama.cpp (CPU)", GREY)
     box(8, 5.2, 3.5, 1.2, "Memory (SQLite)", GREEN)
-    box(8, 7, 3.5, 1.2, "Power manager\n(planned)", "#CCCCCC", True)
-    box(8, 3.4, 3.5, 1.2, "Management API\n(planned)", "#CCCCCC", True)
+    box(8, 7, 3.5, 1.2, "Power manager\n(eco/normal/boost)", BLUE)
+    box(8, 3.4, 3.5, 1.2, "Management API\n(read-only)", BLUE)
     box(8, 1.6, 3.5, 1.2, "Node discovery\n(planned)", "#CCCCCC", True)
     for y0, y1 in ((7, 6.4), (5.2, 4.6), (3.4, 2.8)):
         ax.annotate("", xy=(4, y1), xytext=(4, y0), arrowprops=dict(arrowstyle="-|>", lw=3))
     ax.annotate("", xy=(8, 5.8), xytext=(7, 5.8), arrowprops=dict(arrowstyle="<->", lw=3))
     ax.set_title("ECAPs Node Runtime software stack (research prototype)", fontsize=20)
-    ax.text(0.2, 0.3, "Dashed = planned, not implemented. Software only; no ECAPs silicon.", fontsize=14, color=GREY)
+    ax.text(0.2, 0.3, "Dashed = planned, not built. Serial adapter tested on a fake port only. Software only; no ECAPs silicon.", fontsize=14, color=GREY)
     d = out_dir(mock) / "figures"; d.mkdir(exist_ok=True)
     fig.savefig(d / "stack_diagram.svg"); fig.savefig(d / "stack_diagram.png", dpi=300); plt.close(fig)
 

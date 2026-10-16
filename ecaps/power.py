@@ -11,7 +11,7 @@ from .model_manager import CATALOG, ModelTier, choose
 
 MODES = ("eco", "normal", "boost")
 # max_tokens / ctx are fixed per mode; threads are derived from the detected core count.
-MODE_LIMITS = {"eco": {"max_tokens": 32, "ctx": 1024},
+MODE_LIMITS = {"eco": {"max_tokens": 64, "ctx": 1024},
                "normal": {"max_tokens": 64, "ctx": 2048},
                "boost": {"max_tokens": 128, "ctx": 4096}}
 

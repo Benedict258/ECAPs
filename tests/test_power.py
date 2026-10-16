@@ -43,3 +43,31 @@ def test_node_switches_mode_and_restarts_backend():
     n.set_power(12)                       # same mode: no restart
     assert made == ["boost", "eco"] and closed == ["boost"]
     assert n.metrics["mode_switches"] == 1 and n.metrics["steps"] == 1
+
+
+def test_every_valid_action_fits_eco_token_cap():
+    """Crude check: no real tokenizer here, so estimate tokens as ceil(chars/2) (pessimistic for JSON).
+    Placeholder: must be re-checked with the real model's tokenizer."""
+    import json, math
+    from ecaps.devices import SimulatedSensors
+    from ecaps.power import MODE_LIMITS
+    from ecaps.tools import MAX_ALERT_CHARS, Toolbox
+    tb = Toolbox(SimulatedSensors())
+    cap = MODE_LIMITS["eco"]["max_tokens"]
+    worst = {}
+    for name, t in tb.tools.items():
+        args = {}
+        for k, spec in t.args.items():
+            args[k] = max(spec, key=len) if isinstance(spec, list) else "x" * MAX_ALERT_CHARS
+        worst[name] = {"tool": name, "args": args}
+        tb.execute(worst[name])                      # it really is a valid action
+    for name, action in worst.items():
+        est = math.ceil(len(json.dumps(action, separators=(",", ":"))) / 2)
+        assert est <= cap, f"{name}: ~{est} tokens > eco cap {cap}"
+
+
+def test_overlong_alert_rejected():
+    from ecaps.devices import SimulatedSensors
+    from ecaps.tools import ActionError, Toolbox
+    with pytest.raises(ActionError):
+        Toolbox(SimulatedSensors()).execute({"tool": "log_alert", "args": {"msg": "x" * 61}})

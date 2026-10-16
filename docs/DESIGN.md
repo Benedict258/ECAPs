@@ -15,14 +15,17 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
   Qwen2.5-3B is skipped on purpose (research licence). Licences are UNVERIFIED: the cloud sandbox cannot reach Hugging Face.
 
 ## Stretch work (power modes, devices, management API)
-- **Power modes.** `eco` = smallest tier, 1/4 of physical cores, 32 max tokens, ctx 1024. `normal` = largest tier fitting the
+- **Power modes.** `eco` = smallest tier, 1/4 of physical cores, 64 max tokens, ctx 1024. `normal` = largest tier fitting the
   memory budget, 1/2 cores, 64 tokens, ctx 2048. `boost` = same tier as normal, all physical cores, 128 tokens, ctx 4096.
   So at a 4 GB budget normal and boost differ in threads/tokens/context but not model tier. Chosen as the simplest rule;
   the numbers are design settings, not tuned results. Mode is chosen from a **simulated** battery % with plain thresholds
   (<30 eco, >=80 boost, >=60 boost if solar is on), no hysteresis, so it can flap near a threshold.
 - **B4 and energy.** B4 reports tokens/s, wall time, task success and CPU-seconds per task (user+system CPU of the server plus
   the client process, via psutil). It is an energy **proxy**; no watts are measured and no energy saving is claimed.
-  Eco's 32-token cap may truncate JSON actions on real models; if so it will show up as lower task success, and is reported as is.
+  Eco's cap was raised from 32 to 64 tokens (a 32-token cap could truncate JSON actions). **The 64 is a placeholder to re-check on real models**:
+  `tests/test_power.py` only checks, with a crude chars/2 token estimate (no real tokenizer), that the longest valid action for each tool
+  fits; `log_alert` messages are limited to 60 characters for that reason. If real runs show truncation it will appear as lower
+  task success in B4 and is reported as is.
   Per-step tokens/s is over very short outputs, so it is noisy.
 - **Device interface.** Default = `SimulatedSensors` (static values or a scripted sequence). `SerialSensors` speaks the line protocol in
   `docs/ESP32.md` and needs the optional `pyserial`. It is tested only against an in-memory fake port. If a device is silent or answers

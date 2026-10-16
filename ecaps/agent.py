@@ -10,7 +10,7 @@ from .memory import Memory
 from .tools import ActionError, Toolbox
 
 SYSTEM = ("You are an edge controller. Given sensor readings and recent events, choose exactly one tool call.\n"
-          "Rules: if soil_moisture < 30 turn the pump on; if tank_level < 10 log an alert and keep the pump off;\n"
+          "Keep any alert msg under 60 characters.\nRules: if soil_moisture < 30 turn the pump on; if tank_level < 10 log an alert and keep the pump off;\n"
           "if temperature > 40 log an alert; otherwise noop.\n"
           'Answer ONLY with JSON: {"tool": <name>, "args": {...}}.\nTools:\n')
 

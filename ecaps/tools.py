@@ -9,6 +9,9 @@ class ActionError(ValueError):
     pass
 
 
+MAX_ALERT_CHARS = 60   # keeps a log_alert action inside the smallest (eco) output-token cap
+
+
 @dataclass
 class Tool:
     name: str
@@ -27,6 +30,8 @@ class Tool:
                 raise ActionError(f"{self.name}.{k} must be one of {spec}, got {v!r}")
             if spec is str and not isinstance(v, str):
                 raise ActionError(f"{self.name}.{k} must be a string")
+            if spec is str and len(v) > MAX_ALERT_CHARS:
+                raise ActionError(f"{self.name}.{k} longer than {MAX_ALERT_CHARS} characters")
         return args
 
 

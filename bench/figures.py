@@ -27,7 +27,7 @@ def _finish(fig, name, mock, env, models, extra="", dummy=False):
     if dummy:
         fig.text(0.5, 0.5, "DUMMY DATA\n(mock backend)", fontsize=70, color="red", alpha=0.18,
                  ha="center", va="center", rotation=25)
-    fig.subplots_adjust(left=0.1, right=0.97, top=0.86, bottom=0.2)
+    fig.subplots_adjust(left=0.1, right=0.97, top=0.86, bottom=0.2, hspace=0.45, wspace=0.35)
     d = out_dir(mock) / "figures"
     d.mkdir(exist_ok=True)
     fig.savefig(d / f"{name}.png", dpi=300)
@@ -95,6 +95,28 @@ def f3(mock):
     _finish(fig, "F3_offline", mock, _env(mock), [r["model"]], f"outbound attempts while blocked: {n_out}; repeats={r['repeats']}", r["dummy"])
 
 
+def f4(mock):
+    r = load_result("b4_power", mock)
+    if not r: return
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8.5))
+    cols = {"eco": GREEN, "normal": BLUE, "boost": ORANGE}
+    panels = (("tokens_per_s", "Tokens/s (per step)"), ("cpu_seconds_per_task", "CPU-seconds per task\n(energy PROXY)"),
+              ("wall_time_s", "Wall time for 20 tasks (s)"), ("correct", "Tasks correct (of 20)"))
+    for ax, (key, lab) in zip(axes.flat, panels):
+        for i, m in enumerate(("eco", "normal", "boost")):
+            sm = r["modes"][m][key]
+            if not sm: continue
+            ax.bar(i, sm["mean"], 0.6, yerr=sm["std"], color=cols[m], capsize=6)
+            ax.text(i, sm["mean"] + sm["std"], f"{sm['mean']:.3g}", ha="center", va="bottom", fontsize=14)
+        ax.set_xticks(range(3), ["eco", "normal", "boost"]); ax.set_ylabel(lab, fontsize=14)
+        ax.tick_params(labelsize=14)
+    c = {m: r["modes"][m]["cpu_seconds_per_task"]["mean"] for m in r["modes"]}
+    fig.suptitle(f"CPU-s per task: eco {c['eco']:.3g}, normal {c['normal']:.3g}, boost {c['boost']:.3g} (proxy, not energy)",
+                 fontsize=18, y=0.97)
+    tiers = sorted({r["modes"][m]["plan"]["tier"] for m in r["modes"]})
+    _finish(fig, "F4_power_modes", mock, _env(mock), tiers, f"repeats={r['repeats']}; CPU-seconds = energy proxy only, no watts measured", r["dummy"])
+
+
 def stack_diagram(mock):
     fig, ax = plt.subplots(figsize=(12, 8)); ax.set_xlim(0, 12); ax.set_ylim(0, 9); ax.axis("off")
 
@@ -121,5 +143,5 @@ def stack_diagram(mock):
 
 
 def make_all(mock: bool):
-    for f in (f1, f2, f3, stack_diagram):
+    for f in (f1, f2, f3, f4, stack_diagram):
         f(mock)

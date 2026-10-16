@@ -5,8 +5,9 @@ import argparse
 import json
 import sys
 
+from ecaps.power import PowerManager
 from ecaps.model_manager import CATALOG, choose, load_config
-from bench import b1_overhead, b2_autofit, b3_offline, figures, summary
+from bench import b1_overhead, b2_autofit, b3_offline, b4_power, figures, summary
 from bench.common import MockRig, RealRig, env_for, out_dir, save_result
 
 
@@ -36,6 +37,8 @@ def main(argv=None) -> int:
     save_result("b1_overhead", b1_overhead.run(rig, a.repeats, threads=a.threads), a.mock)
     save_result("b2_autofit", b2_autofit.run(rig, repeats=a.repeats, threads=a.threads), a.mock)
     save_result("b3_offline", b3_offline.run(rig, a.repeats, a.threads, tier), a.mock)
+    power = PowerManager(load_config()["budget_gb"], env["physical_cores"] or env["logical_threads"], a.quant)
+    save_result("b4_power", b4_power.run(rig, power, a.repeats), a.mock)
     figures.make_all(a.mock)
     print("summary:", summary.write(a.mock))
     return 0

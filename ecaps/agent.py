@@ -24,6 +24,8 @@ class StepResult:
     latency_s: float
     raw: str
     source: str = "local"
+    n_tokens: int = 0
+    tokens_per_s: float = 0.0
 
 
 class Agent:
@@ -61,6 +63,7 @@ class Agent:
             else:
                 res = StepResult(action if isinstance(action, dict) else None, False, None, str(e), 0.0, raw)
         res.latency_s = time.perf_counter() - t0
+        res.n_tokens, res.tokens_per_s = gen.n_tokens, gen.tokens_per_s
         self.memory.add("step", {"sensors": self.sensors.snapshot(), "action": res.action,
                                  "valid": res.valid, "error": res.error})
         return res

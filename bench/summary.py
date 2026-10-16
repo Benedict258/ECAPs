@@ -17,7 +17,7 @@ def write(mock: bool) -> str:
         L += ["> **DUMMY DATA from MockBackend, generated in a cloud container. NOT measurements. Do not use on the poster.**", ""]
     L += ["# ECAPs Node Runtime: results summary", "", "Research prototype. Stand-in reference machine, not ECAPs hardware.", "",
           f"**{footer_line(env)}**", ""]
-    b1, b2, b3 = (load_result(n, mock) for n in ("b1_overhead", "b2_autofit", "b3_offline"))
+    b1, b2, b3, b4 = (load_result(n, mock) for n in ("b1_overhead", "b2_autofit", "b3_offline", "b4_power"))
     if b1:
         o = b1["tps_overhead_pct"]
         L += ["## B1 Overhead vs raw llama-server", f"Model {b1['model']}, {b1['threads']} threads, {b1['n_tokens']} tokens, {b1['repeats']} repeats (+1 discarded warm-up).", "",
@@ -45,7 +45,19 @@ def write(mock: bool) -> str:
         fails = b3["modes"]["network_blocked"]["failures_first_repeat"]
         L += ["", f"Failures in first blocked repeat ({len(fails)}), kept as-is:"] + [f"- task {f['task']}: expected {f['expected']}, got {f['action']}" for f in fails]
         L += ["", "*Caption F3:* Same task set with and without outbound network. Loopback to the local llama-server is allowed in the blocked mode; any other connection attempt is recorded and refused.", ""]
-    L += ["## Not run", "- B4 / F4 power modes: stretch item, not implemented, no data."]
+    if b4:
+        L += ["## B4 Power modes", f"20 tasks x {b4['repeats']} repeats per mode. **CPU-seconds is an energy PROXY only; no watts were measured; no energy saving is claimed.**", "",
+              "| mode | tier | threads | max tokens | ctx | tokens/s | CPU-s per task | wall time 20 tasks (s) | mean correct |", "|---|---|---|---|---|---|---|---|---|"]
+        for k, m in b4["modes"].items():
+            p_ = m["plan"]
+            L.append(f"| {k} | {p_['tier']} | {p_['threads']} | {p_['max_tokens']} | {p_['ctx']} | {_f(m['tokens_per_s'], 2) if m['tokens_per_s'] else '-'} | "
+                     f"{_f(m['cpu_seconds_per_task'], 3)} | {_f(m['wall_time_s'], 2)} | {_f(m['correct'], 2)} / {m['tasks']} |")
+        L += ["", "*Caption F4:* Same 20 tasks in each power mode (threads, max output tokens, context size and model tier change by mode; battery level is simulated). "
+              "CPU-seconds per task is a proxy for energy, not a measurement of it.", ""]
+    L += ["## Not run"]
+    if not b4:
+        L += ["- B4 / F4 power modes: no results file present."]
+    L += ["- Node discovery / request routing and the offline sync queue: out of scope, not built."]
     p = out_dir(mock) / "summary.md"
     p.write_text("\n".join(L) + "\n")
     return str(p)

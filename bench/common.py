@@ -70,8 +70,13 @@ class Session:
     """A loaded model + a way to call it directly and through the runtime + peak RSS tracking."""
     def __init__(self, tier, backend, direct, procs, closer=lambda: None):
         self.tier, self.backend, self.direct, self._closer = tier, backend, direct, closer
+        self._procs = procs
         self._watch = _RssWatcher(procs)
         self._watch.start()
+
+    def cpu_seconds(self) -> float:
+        """User+system CPU time of server (if any) + this client process. Energy PROXY only."""
+        return sum(t.user + t.system for t in (p.cpu_times() for p in self._procs()))
 
     def reset_peak(self): self._watch.peak = 0
     def peak_rss_gb(self) -> float: return self._watch.peak / GB

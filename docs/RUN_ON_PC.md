@@ -29,13 +29,13 @@ The slowest parts are loading models (B2, B4). Model files are read from disk ea
 ## 2. llama-server (prebuilt CPU binary)
 1. Open the llama.cpp releases page on GitHub (`ggml-org/llama.cpp`, Releases).
 2. Download the **Windows CPU build for x64** (a `.zip`). Release file names change between versions (look for `win` and `cpu`,
-   or `avx2`, and `x64`). Do **not** pick the CUDA, Vulkan, HIP or ARM builds. (File names are from memory and unverified: check the page.)
+   or `avx2`, and `x64`). Do **not** pick the CUDA, Vulkan, HIP or ARM builds. **The release file names mentioned here are unverified: check the release page yourself and pick the Windows x64 CPU build it actually offers.**
 3. Unzip it so that `llama-server.exe` and its `.dll` files sit together, e.g. in the repo's `bin\` folder.
 4. If you put it elsewhere, tell the runtime where it is, either per run with `--llama-server C:\path\llama-server.exe`
    or once per session with `$env:LLAMA_SERVER = "C:\path\llama-server.exe"`.
 5. Windows Firewall may ask about `llama-server.exe`. The runtime starts it bound to `127.0.0.1` (this PC only); it should work
    if you decline network access, though that is an expectation, not something tested here.
-6. Licence: llama.cpp is believed to be MIT. Verify on the repository.
+6. Licence: llama.cpp is MIT per its GitHub page (see `docs/MODELS.md`).
 
 ## 3. Models (GGUF files)
 Read `docs/MODELS.md` first. Files must be placed in `models\` with **exactly** these names (or point elsewhere with `--models-dir`):
@@ -49,7 +49,7 @@ Read `docs/MODELS.md` first. Files must be placed in `models\` with **exactly** 
 Sizes are estimates (parameters x 0.6 bytes); check the real size on the download page.
 Download the Q4_K_M GGUF from the Hugging Face repos listed in `docs/MODELS.md`, then rename to the names above.
 Some repos split large models into several shard files (`...-00001-of-00002.gguf`); if so, merge them with `llama-gguf-split --merge`
-(shipped in the llama.cpp release zip) or use a repo that offers a single file. **Check every model's licence on its model card first**; they are unverified here.
+(shipped in the llama.cpp release zip) or use a repo that offers a single file. **Check the licence on the card of the exact repo you download from** (`docs/MODELS.md` records the base models' licences and what was not checked).
 
 **Download the smallest model first** and run steps 4-5 before downloading the others. The other two together are several GB; if your
 bandwidth is limited, only fetch them once the first results look sane.

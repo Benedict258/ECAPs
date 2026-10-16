@@ -20,14 +20,14 @@ class ModelTier:
     name: str
     params_b: float
     hf_repo: str
-    licence: str          # UNVERIFIED until checked against the model card; see docs/MODELS.md
+    licence: str          # per the model card, checked 17 Oct 2026 (see docs/MODELS.md); GGUF conversion repos not checked
 
 
-# Tiers ~1.5B / ~3.8B / ~7.6B. Licences are from memory and MUST be verified (docs/MODELS.md).
+# Tiers ~1.5B / ~3.8B / ~7.6B. Licences: see docs/MODELS.md for sources and check date.
 CATALOG = [
-    ModelTier("qwen2.5-1.5b-instruct", 1.5, "Qwen/Qwen2.5-1.5B-Instruct-GGUF", "Apache-2.0 (unverified)"),
-    ModelTier("phi-3.5-mini-instruct", 3.8, "bartowski/Phi-3.5-mini-instruct-GGUF", "MIT (unverified)"),
-    ModelTier("qwen2.5-7b-instruct", 7.6, "Qwen/Qwen2.5-7B-Instruct-GGUF", "Apache-2.0 (unverified)"),
+    ModelTier("qwen2.5-1.5b-instruct", 1.5, "Qwen/Qwen2.5-1.5B-Instruct-GGUF", "Apache-2.0"),
+    ModelTier("phi-3.5-mini-instruct", 3.8, "bartowski/Phi-3.5-mini-instruct-GGUF", "MIT"),
+    ModelTier("qwen2.5-7b-instruct", 7.6, "Qwen/Qwen2.5-7B-Instruct-GGUF", "Apache-2.0"),
 ]
 
 

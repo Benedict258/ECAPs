@@ -66,7 +66,7 @@ def write(mock: bool) -> str:
           "- Node discovery and request routing: tested on localhost only (several processes on 127.0.0.1); not on a real LAN; throughput gain not measured.",
           "- Offline-first outbox: cloud sync tested only against a localhost server; the cloud endpoint is a stub, off by default.",
           "- Management API (/status /models /metrics): functional tests only; not benchmarked.",
-          "- Model licences: unverified (see docs/MODELS.md).",
+          "- Model licences: base-model licences were checked on 17 Oct 2026 (relayed, not re-checked in the build sandbox); GGUF conversion repos and Python library licences are not recorded (see docs/MODELS.md).",
           "- Energy: not measured. CPU-seconds is a proxy; no energy saving is claimed.",
           "- docs/NODE_SPEC_PROPOSED.md: proposed arithmetic, not measurements."]
     p = out_dir(mock) / "summary.md"

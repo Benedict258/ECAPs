@@ -12,7 +12,8 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
 - **Memory estimate follows the brief literally** (4-bit = 0.5 bytes/weight). Real Q4_K_M files are closer to ~0.6 bytes/weight,
   so B2 measures peak RSS and reports honestly whether each pick stays under budget.
 - **Model tiers**: Qwen2.5-1.5B / Phi-3.5-mini (3.8B) / Qwen2.5-7B, chosen for permissive licences (Apache-2.0 / MIT).
-  Qwen2.5-3B is skipped on purpose (research licence). Licences are UNVERIFIED: the cloud sandbox cannot reach Hugging Face.
+  Qwen2.5-3B is skipped on purpose (research licence). Licences were checked on the model cards on 17 Oct 2026 (as relayed by Benedict; the cloud
+  sandbox cannot reach Hugging Face, so not re-checked here). GGUF conversion repos' licences are not checked. Details and URLs: `docs/MODELS.md`.
 
 ## Stretch work (power modes, devices, management API)
 - **Power modes.** `eco` = smallest tier, 1/4 of physical cores, 64 max tokens, ctx 1024. `normal` = largest tier fitting the

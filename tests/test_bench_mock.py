@@ -66,5 +66,5 @@ def test_only_flag_runs_subset_and_summary_lists_not_run(tmp_path, monkeypatch):
 
 def test_summary_lists_unverified_items():
     text = (out_dir(True) / "summary.md").read_text()
-    for needle in ("fake port", "fake broker", "localhost only", "Model licences: unverified", "Energy: not measured", "No real model was run"):
+    for needle in ("fake port", "fake broker", "localhost only", "Model licences: base-model licences were checked on 17 Oct 2026", "Energy: not measured", "No real model was run"):
         assert needle in text

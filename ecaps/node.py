@@ -1,6 +1,7 @@
 """A Node ties together power manager, backend, agent, memory and metrics (used by the management API)."""
 from __future__ import annotations
 
+import threading
 import time
 from typing import Callable
 
@@ -22,6 +23,7 @@ class Node:
         self.memory = memory or Memory(":memory:")
         self.toolbox = Toolbox(self.sensors)
         self.started = time.time()
+        self.lock = threading.Lock()
         self.battery_pct, self.solar = battery_pct, solar
         self.metrics = {"steps": 0, "valid_actions": 0, "invalid_actions": 0, "mode_switches": 0,
                         "latency_s_total": 0.0, "tokens_total": 0, "last_tokens_per_s": None}
@@ -46,12 +48,13 @@ class Node:
 
     def step(self):
         r = self.agent.step()
-        m = self.metrics
-        m["steps"] += 1
-        m["valid_actions" if r.valid else "invalid_actions"] += 1
-        m["latency_s_total"] += r.latency_s
-        m["tokens_total"] += r.n_tokens
-        m["last_tokens_per_s"] = r.tokens_per_s
+        with self.lock:
+            m = self.metrics
+            m["steps"] += 1
+            m["valid_actions" if r.valid else "invalid_actions"] += 1
+            m["latency_s_total"] += r.latency_s
+            m["tokens_total"] += r.n_tokens
+            m["last_tokens_per_s"] = r.tokens_per_s
         return r
 
     def close(self):

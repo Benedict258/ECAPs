@@ -35,11 +35,13 @@ class Agent:
         self.backend, self.tools, self.memory, self.sensors = backend, toolbox, memory, sensors
         self.cloud_fallback, self.use_cloud = cloud_fallback, use_cloud   # off by default
         self.max_tokens, self.seed = max_tokens, seed
+        self.last_snapshot: dict = {}
 
     def build_prompt(self) -> str:
         recent = self.memory.recent(3)
+        self.last_snapshot = self.sensors.snapshot()
         return (SYSTEM + self.tools.describe() + "\n\nRecent events: " + json.dumps(recent)
-                + "\nSensors: " + json.dumps(self.sensors.snapshot()) + "\nAction:")
+                + "\nSensors: " + json.dumps(self.last_snapshot) + "\nAction:")
 
     def step(self) -> StepResult:
         prompt = self.build_prompt()                      # sense

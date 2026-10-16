@@ -41,8 +41,23 @@ class Toolbox:
             Tool("noop", "Do nothing; everything is fine", {}, lambda: "ok"),
         ]}
 
-    def _set_pump(self, state): self.state["pump"] = state; return f"pump {state}"
-    def _log_alert(self, msg): self.state["alerts"].append(msg); return "alert logged"
+    def _device(self, method: str, *args):
+        fn = getattr(self.sensors, method, None)
+        if fn is not None:
+            try:
+                fn(*args)
+            except Exception as e:                      # DeviceError etc.: do not claim success
+                raise ActionError(f"device error in {method}: {e}") from e
+
+    def _set_pump(self, state):
+        self._device("set_pump", state)                 # actuate first; only record on success
+        self.state["pump"] = state
+        return f"pump {state}"
+
+    def _log_alert(self, msg):
+        self._device("alert", msg)
+        self.state["alerts"].append(msg)
+        return "alert logged"
     def _read(self, name): return self.sensors.read(name)
 
     def describe(self) -> str:

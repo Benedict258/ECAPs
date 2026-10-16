@@ -46,3 +46,13 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
 - `bench.preflight` (also run first in real mode, for only the models the selected experiments need) checks files, GGUF headers, disk,
   RAM and swap, prints PASS/FAIL/WARN, and never downloads. Low RAM or swap is a WARN, not a FAIL: the run is allowed but the user is told.
   File sizes for models that are missing are estimates (params x 0.6 bytes), labelled as such.
+
+## Offline-first outbox
+- `ecaps/outbox.py`: with an outbox attached, every agent step is written to a local SQLite queue (an `action` record, plus an `event`
+  record for alerts and invalid actions). Nothing is sent unless `cloud.enabled` is true in `ecaps.config.json` with a `url`; the default is off
+  and `make_sink` returns `None`. With no sink, `Syncer.sync_once` does nothing and opens no sockets (tested with all connects blocked).
+- Delivery is **at-least-once**, oldest first, in batches; a batch is marked sent only after the sink returns without raising, and every record has a
+  unique id so a receiver can de-duplicate. A failed attempt keeps the batch queued and increments its attempt count (no backoff yet).
+- `HttpCloudSink` POSTs `{"records": [...]}` with an optional bearer token (`ECAPS_CLOUD_TOKEN` env var, never stored or logged) and only accepts http/https URLs.
+  It is tested only against a localhost server; no real cloud service was used. The cloud **LLM fallback** in the agent is a separate, still-unimplemented stub.
+- The queue grows without bound while offline (no size cap or pruning yet), and sent rows are not deleted.

@@ -25,7 +25,10 @@ def status(node: Node) -> dict:
                 "memory_budget_note": "software setting, not physical RAM",
                 "device": type(node.sensors).__name__,
                 "last_sensors": dict(node.agent.last_snapshot),
-                "cloud_fallback": "off (stub)"}
+                "cloud_fallback": "off (stub)",
+                "outbox": {**(node.outbox.counts() if node.outbox else {"pending": None, "sent": None}),
+                           "queueing": node.outbox is not None,
+                           "cloud_sync_configured": bool(node.syncer and node.syncer.sink)}}
 
 
 def models(node: Node, models_dir: str | Path = "models", quant: str = "q4") -> dict:
@@ -88,6 +91,8 @@ def main(argv=None):
     ap.add_argument("--solar", action="store_true")
     ap.add_argument("--llama-url", default="http://127.0.0.1:8080")
     ap.add_argument("--mock", action="store_true", help="DUMMY backend, for trying the API without a model")
+    ap.add_argument("--outbox", default="ecaps_outbox.sqlite", help="local SQLite queue file for events/actions")
+    ap.add_argument("--sync-interval", type=float, default=30, help="seconds between sync attempts (only if cloud is enabled in config)")
     ap.add_argument("--interval", type=float, default=0, help="seconds between agent steps (0 = API only)")
     a = ap.parse_args(argv)
     cfg = load_config()
@@ -98,8 +103,19 @@ def main(argv=None):
         print("WARNING: --mock is a DUMMY backend; nothing it reports is a measurement.")
     else:
         factory = lambda plan: (LlamaServerBackend(a.llama_url), lambda: None)
+    import os
+    from .outbox import OutboxQueue, Syncer, make_sink
+    outbox = OutboxQueue(":memory:" if a.mock else a.outbox)
+    sink = make_sink(cfg, os.environ.get("ECAPS_CLOUD_TOKEN"))      # None unless cloud.enabled in config
     node = Node(factory, PowerManager(cfg["budget_gb"], env["physical_cores"] or env["logical_threads"], cfg["quant"]),
-                sensors=make_sensors(cfg), battery_pct=a.battery, solar=a.solar)
+                sensors=make_sensors(cfg), battery_pct=a.battery, solar=a.solar,
+                outbox=outbox, syncer=Syncer(outbox, sink))
+    if sink is not None:
+        def sync_loop():
+            while True:
+                time.sleep(a.sync_interval)
+                node.sync()
+        threading.Thread(target=sync_loop, daemon=True).start()
     if a.interval > 0:
         def loop():
             while True:

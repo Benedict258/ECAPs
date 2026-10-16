@@ -23,8 +23,8 @@ def test_mock_pipeline_end_to_end():
 
 
 def test_real_mode_refuses_without_models(capsys, monkeypatch):
-    from bench.common import RealRig
-    monkeypatch.setattr(RealRig, 'missing', lambda self, tiers: ['fake-missing-file'])
+    from bench.preflight import Check
+    monkeypatch.setattr(run_all, 'run_preflight', lambda rig: ([Check('fake', 'FAIL', 'missing')], False))
     assert run_all.main([]) == 3
     assert "Nothing was downloaded" in capsys.readouterr().err
 

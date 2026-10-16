@@ -40,7 +40,7 @@ The memory budget is a **software setting**, not a change to physical RAM.
 1. `pip install -r requirements.txt` (Python 3.11+).
 2. Get a CPU `llama-server` binary from the llama.cpp releases and put it at `bin/llama-server` (`.exe` on Windows),
    or set the `LLAMA_SERVER` environment variable to its path.
-3. Download three GGUF models into `models/` with the exact names in `docs/MODELS.md` (about 8 GB in total, estimated).
+3. Download three GGUF models into `models/` with the exact names in `docs/MODELS.md` (about 7.8 GB in total, estimated).
    Check each model's licence on its model card first.
 4. Optional smoke test: start `llama-server` yourself, then `python -m ecaps.smoke`.
 5. Run everything with one command: `python -m bench.run_all` (at least 5 repeats; temperature 0; fixed seeds).

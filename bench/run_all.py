@@ -7,6 +7,7 @@ import sys
 
 from ecaps.power import PowerManager
 from ecaps.model_manager import CATALOG, choose, load_config
+from bench.preflight import render, run_preflight
 from bench import b1_overhead, b2_autofit, b3_offline, b4_power, figures, summary
 from bench.common import MockRig, RealRig, env_for, out_dir, save_result
 
@@ -26,10 +27,12 @@ def main(argv=None) -> int:
         rig = MockRig(responder)
     else:
         rig = RealRig(quant=a.quant)
-        miss = rig.missing(CATALOG)
-        if miss:
-            print("Cannot run real benchmarks yet. Missing:\n  " + "\n  ".join(miss) +
-                  "\nSee docs/MODELS.md. Nothing was downloaded.", file=sys.stderr); return 3
+        checks, ok = run_preflight(rig)
+        print(render(checks, ok), file=sys.stdout if ok else sys.stderr)
+        if not ok:
+            print("Cannot run real benchmarks yet. See docs/MODELS.md and docs/RUN_ON_PC.md. Nothing was downloaded.",
+                  file=sys.stderr)
+            return 3
 
     env = env_for(a.mock)
     (out_dir(a.mock) / "environment.json").write_text(json.dumps(env, indent=2))

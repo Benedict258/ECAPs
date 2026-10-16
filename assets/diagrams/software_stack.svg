@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-16T23:21:09.263920</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648 
+L 1152 648 
+L 1152 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 57.384 175.824 
+L 558.36 175.824 
+Q 568.944 175.824 568.944 165.24 
+L 568.944 87.624 
+Q 568.944 77.04 558.36 77.04 
+L 57.384 77.04 
+Q 46.8 77.04 46.8 87.624 
+L 46.8 165.24 
+Q 46.8 175.824 57.384 175.824 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 57.384 299.304 
+L 558.36 299.304 
+Q 568.944 299.304 568.944 288.72 
+L 568.944 211.104 
+Q 568.944 200.52 558.36 200.52 
+L 57.384 200.52 
+Q 46.8 200.52 46.8 211.104 
+L 46.8 288.72 
+Q 46.8 299.304 57.384 299.304 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 57.384 422.784 
+L 558.36 422.784 
+Q 568.944 422.784 568.944 412.2 
+L 568.944 334.584 
+Q 568.944 324 558.36 324 
+L 57.384 324 
+Q 46.8 324 46.8 334.584 
+L 46.8 412.2 
+Q 46.8 422.784 57.384 422.784 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 57.384 546.264 
+L 558.36 546.264 
+Q 568.944 546.264 568.944 535.68 
+L 568.944 458.064 
+Q 568.944 447.48 558.36 447.48 
+L 57.384 447.48 
+Q 46.8 447.48 46.8 458.064 
+L 46.8 535.68 
+Q 46.8 546.264 57.384 546.264 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #cfcfcf; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 650.088 147.6 
+L 1094.616 147.6 
+Q 1105.2 147.6 1105.2 137.016 
+L 1105.2 87.624 
+Q 1105.2 77.04 1094.616 77.04 
+L 650.088 77.04 
+Q 639.504 77.04 639.504 87.624 
+L 639.504 137.016 
+Q 639.504 147.6 650.088 147.6 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 650.088 235.8 
+L 1094.616 235.8 
+Q 1105.2 235.8 1105.2 225.216 
+L 1105.2 175.824 
+Q 1105.2 165.24 1094.616 165.24 
+L 650.088 165.24 
+Q 639.504 165.24 639.504 175.824 
+L 639.504 225.216 
+Q 639.504 235.8 650.088 235.8 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 650.088 324 
+L 1094.616 324 
+Q 1105.2 324 1105.2 313.416 
+L 1105.2 264.024 
+Q 1105.2 253.44 1094.616 253.44 
+L 650.088 253.44 
+Q 639.504 253.44 639.504 264.024 
+L 639.504 313.416 
+Q 639.504 324 650.088 324 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 650.088 412.2 
+L 1094.616 412.2 
+Q 1105.2 412.2 1105.2 401.616 
+L 1105.2 352.224 
+Q 1105.2 341.64 1094.616 341.64 
+L 650.088 341.64 
+Q 639.504 341.64 639.504 352.224 
+L 639.504 401.616 
+Q 639.504 412.2 650.088 412.2 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 650.088 500.4 
+L 1094.616 500.4 
+Q 1105.2 500.4 1105.2 489.816 
+L 1105.2 440.424 
+Q 1105.2 429.84 1094.616 429.84 
+L 650.088 429.84 
+Q 639.504 429.84 639.504 440.424 
+L 639.504 489.816 
+Q 639.504 500.4 650.088 500.4 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #e69f00; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 52.4448 616.824 
+L 76.4352 616.824 
+Q 82.08 616.824 82.08 611.1792 
+L 82.08 594.2448 
+Q 82.08 588.6 76.4352 588.6 
+L 52.4448 588.6 
+Q 46.8 588.6 46.8 594.2448 
+L 46.8 611.1792 
+Q 46.8 616.824 52.4448 616.824 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #56b4e9; stroke: #111111; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 419.3568 616.824 
+L 443.3472 616.824 
+Q 448.992 616.824 448.992 611.1792 
+L 448.992 594.2448 
+Q 448.992 588.6 443.3472 588.6 
+L 419.3568 588.6 
+Q 413.712 588.6 413.712 594.2448 
+L 413.712 611.1792 
+Q 413.712 616.824 419.3568 616.824 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #e69f00; stroke: #111111; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 786.2688 616.824 
+L 810.2592 616.824 
+Q 815.904 616.824 815.904 611.1792 
+L 815.904 594.2448 
+Q 815.904 588.6 810.2592 588.6 
+L 786.2688 588.6 
+Q 780.624 588.6 780.624 594.2448 
+L 780.624 611.1792 
+Q 780.624 616.824 786.2688 616.824 
+z
+" clip-path="url(#p0d4d0f4546)" style="fill: #cfcfcf; stroke: #111111; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 28px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="576" y="38.08675" transform="rotate(-0 576 38.08675)">ECAPs Node Runtime: software stack and what is verified</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="111.681863" transform="rotate(-0 307.872 111.681863)">Device interface</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="135.939925" transform="rotate(-0 307.872 135.939925)">simulated feed (default); serial and MQTT adapters</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="159.224725" transform="rotate(-0 307.872 159.224725)">TESTED: mock; serial/MQTT on fake port/broker only</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="233.045456" transform="rotate(-0 307.872 233.045456)">Agent runtime  (sense &gt; plan &gt; act)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="259.419925" transform="rotate(-0 307.872 259.419925)">BUILT; TESTED: mock backend only</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="356.525456" transform="rotate(-0 307.872 356.525456)">Model manager  (memory auto-fit)</text>
+   </g>
+   <g id="text_8">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="383.541956" transform="rotate(-0 307.872 383.541956)">BUILT; TESTED: unit tests; no real model run</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 21px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="480.087488" transform="rotate(-0 307.872 480.087488)">Backend: llama.cpp wrapper</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="307.872" y="506.379925" transform="rotate(-0 307.872 506.379925)">BUILT; NEVER RUN against a real server yet</text>
+   </g>
+   <g id="patch_14">
+    <path d="M 307.872 177.2352 
+Q 307.872 188.172 307.872 195.195681 
+" style="fill: none; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 313.472 183.995681 
+L 307.872 195.195681 
+L 302.272 183.995681 
+z
+" style="fill: #111111; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 307.872 300.7152 
+Q 307.872 311.652 307.872 318.675681 
+" style="fill: none; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 313.472 307.475681 
+L 307.872 318.675681 
+L 302.272 307.475681 
+z
+" style="fill: #111111; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 307.872 424.1952 
+Q 307.872 435.132 307.872 442.155681 
+" style="fill: none; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 313.472 430.955681 
+L 307.872 442.155681 
+L 302.272 430.955681 
+z
+" style="fill: #111111; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="105.906572" transform="rotate(-0 872.352 105.906572)">Power manager</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="131.706325" transform="rotate(-0 872.352 131.706325)">BUILT; TESTED: mock only</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="194.398994" transform="rotate(-0 872.352 194.398994)">Memory  (SQLite)</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="219.906325" transform="rotate(-0 872.352 219.906325)">BUILT; TESTED: mock only</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="282.673213" transform="rotate(-0 872.352 282.673213)">Outbox / queue</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="308.106325" transform="rotate(-0 872.352 308.106325)">BUILT; cloud sync: localhost test only</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="370.506572" transform="rotate(-0 872.352 370.506572)">Management API</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="396.306325" transform="rotate(-0 872.352 396.306325)">BUILT; functional tests only</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="458.998994" transform="rotate(-0 872.352 458.998994)">Node discovery + routing</text>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="872.352" y="484.506325" transform="rotate(-0 872.352 484.506325)">PROTOTYPE; localhost only</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #111111" x="92.664" y="606.575125" transform="rotate(-0 92.664 606.575125)">built, tested on mock / fake devices only</text>
+   </g>
+   <g id="text_22">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #111111" x="459.576" y="606.575125" transform="rotate(-0 459.576 606.575125)">prototype, tested on localhost only</text>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 14px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #111111" x="826.488" y="606.575125" transform="rotate(-0 826.488 606.575125)">built, real server not yet run</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p0d4d0f4546">
+   <rect x="11.52" y="6.48" width="1128.96" height="635.04"/>
+  </clipPath>
+ </defs>
+</svg>

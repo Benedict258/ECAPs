@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1152pt" height="648pt" viewBox="0 0 1152 648" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-10-16T23:21:10.175691</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 648 
+L 1152 648 
+L 1152 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 389.016 168.768 
+L 762.984 168.768 
+Q 773.568 168.768 773.568 158.184 
+L 773.568 80.568 
+Q 773.568 69.984 762.984 69.984 
+L 389.016 69.984 
+Q 378.432 69.984 378.432 80.568 
+L 378.432 158.184 
+Q 378.432 168.768 389.016 168.768 
+z
+" clip-path="url(#p656e37782f)" style="fill: #ffffff; stroke-dasharray: 11.1,4.8; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 64.44 574.488 
+L 1087.56 574.488 
+Q 1105.2 574.488 1105.2 556.848 
+L 1105.2 271.08 
+Q 1105.2 253.44 1087.56 253.44 
+L 64.44 253.44 
+Q 46.8 253.44 46.8 271.08 
+L 46.8 556.848 
+Q 46.8 574.488 64.44 574.488 
+z
+" clip-path="url(#p656e37782f)" style="fill: #f2f2f2; stroke: #111111; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 85.608 503.928 
+L 283.176 503.928 
+Q 293.76 503.928 293.76 493.344 
+L 293.76 334.584 
+Q 293.76 324 283.176 324 
+L 85.608 324 
+Q 75.024 324 75.024 334.584 
+L 75.024 493.344 
+Q 75.024 503.928 85.608 503.928 
+z
+" clip-path="url(#p656e37782f)" style="fill: #ffffff; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 346.68 503.928 
+L 657.144 503.928 
+Q 667.728 503.928 667.728 493.344 
+L 667.728 334.584 
+Q 667.728 324 657.144 324 
+L 346.68 324 
+Q 336.096 324 336.096 334.584 
+L 336.096 493.344 
+Q 336.096 503.928 346.68 503.928 
+z
+" clip-path="url(#p656e37782f)" style="fill: #009e73; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 770.04 503.928 
+L 1066.392 503.928 
+Q 1076.976 503.928 1076.976 493.344 
+L 1076.976 334.584 
+Q 1076.976 324 1066.392 324 
+L 770.04 324 
+Q 759.456 324 759.456 334.584 
+L 759.456 493.344 
+Q 759.456 503.928 770.04 503.928 
+z
+" clip-path="url(#p656e37782f)" style="fill: #56b4e9; stroke: #111111; stroke-width: 3; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 127.944 235.8 
+L 448.992 235.8 
+Q 459.576 235.8 459.576 225.216 
+L 459.576 186.408 
+Q 459.576 175.824 448.992 175.824 
+L 127.944 175.824 
+Q 117.36 175.824 117.36 186.408 
+L 117.36 225.216 
+Q 117.36 235.8 127.944 235.8 
+z
+" clip-path="url(#p656e37782f)" style="fill: #ffffff; stroke: #111111; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 798.264 235.8 
+L 1087.56 235.8 
+Q 1098.144 235.8 1098.144 225.216 
+L 1098.144 186.408 
+Q 1098.144 175.824 1087.56 175.824 
+L 798.264 175.824 
+Q 787.68 175.824 787.68 186.408 
+L 787.68 225.216 
+Q 787.68 235.8 798.264 235.8 
+z
+" clip-path="url(#p656e37782f)" style="fill: #ffffff; stroke: #111111; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 28px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="576" y="35.264875" transform="rotate(-0 576 35.264875)">Edge-cloud collaboration: local first, cloud as a partner</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 24px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="576" y="113.2977" transform="rotate(-0 576 113.2977)">Cloud partner</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 18px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="576" y="149.038875" transform="rotate(-0 576 149.038875)">optional, when online</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #111111" x="82.08" y="551.704625" transform="rotate(-0 82.08 551.704625)">Local node: keeps working with no network</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'DejaVu Sans'; fill: #111111" transform="translate(135.103406 408.024456)">Sensors</text>
+    <text style="font-weight: 700; font-size: 22px; font-family: 'DejaVu Sans'; fill: #111111" transform="translate(123.625594 436.818675)">and users</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="501.912" y="378.065875" transform="rotate(-0 501.912 378.065875)">1  Local-first answer</text>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 18px; font-family: 'DejaVu Sans'; fill: #ffffff" transform="translate(385.785281 430.988344)">The node senses, decides</text>
+    <text style="font-size: 18px; font-family: 'DejaVu Sans'; fill: #ffffff" transform="translate(414.358875 455.306625)">and acts on its own</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 22px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="918.216" y="376.616969" transform="rotate(-0 918.216 376.616969)">3  Queue when offline</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 18px; font-family: 'DejaVu Sans'; fill: #111111" transform="translate(810.934594 431.906625)">Events and actions wait</text>
+    <text style="font-size: 18px; font-family: 'DejaVu Sans'; fill: #111111" transform="translate(846.747562 453.562875)">in a local queue</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 297.288 414.3168 
+Q 314.928 414.3168 328.654881 414.3168 
+" style="fill: none; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 317.454881 408.7168 
+L 328.654881 414.3168 
+L 317.454881 419.9168 
+z
+" style="fill: #111111; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 671.256 414.3168 
+Q 713.592 414.3168 752.014881 414.3168 
+" style="fill: none; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 740.814881 408.7168 
+L 752.014881 414.3168 
+L 740.814881 419.9168 
+z
+" style="fill: #111111; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 16px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="713.592" y="392.0578" transform="rotate(-0 713.592 392.0578)">no link</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 463.104 320.472 
+Q 473.688 246.384 483.718601 176.16979 
+" style="fill: none; stroke-dasharray: 12.95,5.6; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 476.590965 186.465265 
+L 483.718601 176.16979 
+L 487.678399 188.049184 
+z
+" style="fill: #111111; stroke-dasharray: 12.95,5.6; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="288.1152" y="212.542638" transform="rotate(-0 288.1152 212.542638)">2  Escalate when needed</text>
+   </g>
+   <g id="patch_12">
+    <path d="M 813.844312 317.144811 
+Q 770.04 246.384 726.235688 175.623189 
+" style="fill: none; stroke-dasharray: 12.95,5.6; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 812.710625 304.674256 
+L 813.844312 317.144811 
+L 803.187655 310.569428 
+z
+" style="fill: #111111; stroke-dasharray: 12.95,5.6; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+    <path d="M 727.369375 188.093744 
+L 726.235688 175.623189 
+L 736.892345 182.198572 
+z
+" style="fill: #111111; stroke-dasharray: 12.95,5.6; stroke-dashoffset: 0; stroke: #111111; stroke-width: 3.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 19px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #111111" x="942.912" y="210.702013" transform="rotate(-0 942.912 210.702013)">4  Update when online</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="576" y="601.911862" transform="rotate(-0 576 601.911862)">Dashed arrows: only when configured and a link exists. Design intent: cloud escalation is a stub, off by default;</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 15px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="576" y="626.607863" transform="rotate(-0 576 626.607863)">queue sync has only been tested against a localhost server. Prototype, research and development stage.</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p656e37782f">
+   <rect x="11.52" y="6.48" width="1128.96" height="635.04"/>
+  </clipPath>
+ </defs>
+</svg>

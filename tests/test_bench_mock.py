@@ -17,7 +17,7 @@ def test_mock_pipeline_end_to_end():
     b3 = json.loads((d / "b3_offline.json").read_text())
     assert b3["modes"]["network_blocked"]["outbound_attempts"] == []
     assert 0 < b3["modes"]["network_blocked"]["correct"]["mean"] < 20   # mock errs on purpose; failures kept
-    for f in ("F1_overhead", "F2_autofit", "F3_offline", "F4_power_modes", "stack_diagram"):
+    for f in ("F1_overhead", "F2_autofit", "F3_offline", "F4_power_modes", "software_stack"):
         assert (d / "figures" / f"{f}.png").exists() and (d / "figures" / f"{f}.svg").exists()
     assert "DUMMY" in (d / "summary.md").read_text()
 

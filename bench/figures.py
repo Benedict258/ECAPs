@@ -118,30 +118,20 @@ def f4(mock):
 
 
 def stack_diagram(mock):
-    fig, ax = plt.subplots(figsize=(12, 8)); ax.set_xlim(0, 12); ax.set_ylim(0, 9); ax.axis("off")
-
-    def box(x, y, w, h, t, c, dashed=False):
-        ax.add_patch(plt.Rectangle((x, y), w, h, fill=True, fc=c, alpha=0.9 if not dashed else 0.25,
-                                   ec="black", lw=2, ls="--" if dashed else "-"))
-        ax.text(x + w / 2, y + h / 2, t, ha="center", va="center", fontsize=16, fontweight="bold",
-                color="white" if not dashed else "black")
-    box(1, 7, 6, 1.2, "Device interface\n(simulated default; serial, MQTT adapters)", BLUE)
-    box(1, 5.2, 6, 1.2, "Agent runtime  sense → plan → act", GREEN)
-    box(1, 3.4, 6, 1.2, "Model manager (memory auto-fit)", ORANGE)
-    box(1, 1.6, 6, 1.2, "Backend: llama.cpp (CPU)", GREY)
-    box(8, 5.2, 3.5, 1.2, "Memory + outbox\n(SQLite)", GREEN)
-    box(8, 7, 3.5, 1.2, "Power manager\n(eco/normal/boost)", BLUE)
-    box(8, 3.4, 3.5, 1.2, "Management API\n(read-only)", BLUE)
-    box(8, 1.6, 3.5, 1.2, "Discovery + routing\n(prototype)", BLUE)
-    for y0, y1 in ((7, 6.4), (5.2, 4.6), (3.4, 2.8)):
-        ax.annotate("", xy=(4, y1), xytext=(4, y0), arrowprops=dict(arrowstyle="-|>", lw=3))
-    ax.annotate("", xy=(8, 5.8), xytext=(7, 5.8), arrowprops=dict(arrowstyle="<->", lw=3))
-    ax.set_title("ECAPs Node Runtime software stack (research prototype)", fontsize=20)
-    ax.text(0.2, 0.3, "Serial/MQTT adapters: fake port/broker tests only. Discovery: localhost only. Software only; no ECAPs silicon.", fontsize=14, color=GREY)
-    d = out_dir(mock) / "figures"; d.mkdir(exist_ok=True)
-    fig.savefig(d / "stack_diagram.svg"); fig.savefig(d / "stack_diagram.png", dpi=300); plt.close(fig)
+    """Single source of truth for the stack diagram: the poster asset kit (assets/make_diagrams.py). Contains no results."""
+    from assets.make_diagrams import software_stack
+    software_stack(out_dir(mock) / "figures")
 
 
 def make_all(mock: bool):
     for f in (f1, f2, f3, f4, stack_diagram):
         f(mock)
+
+
+if __name__ == "__main__":
+    # Re-render figures from results JSON that already exist (runs no benchmark).  python -m bench.figures [--mock]
+    import sys
+    from bench import summary
+    mock = "--mock" in sys.argv[1:]
+    make_all(mock)
+    print("figures:", out_dir(mock) / "figures"); print("summary:", summary.write(mock))

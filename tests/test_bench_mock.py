@@ -62,3 +62,9 @@ def test_only_flag_runs_subset_and_summary_lists_not_run(tmp_path, monkeypatch):
     assert not (d / "b2_autofit.json").exists() and not (d / "b4_power.json").exists()
     txt = (d / "summary.md").read_text()
     assert "B2 auto-fit / F2: not run" in txt and "B4 power modes / F4: not run" in txt
+
+
+def test_summary_lists_unverified_items():
+    text = (out_dir(True) / "summary.md").read_text()
+    for needle in ("fake port", "fake broker", "localhost only", "Model licences: unverified", "Energy: not measured", "No real model was run"):
+        assert needle in text

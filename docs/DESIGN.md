@@ -35,7 +35,7 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
   `/models` sizes are the manager's estimates, not measurements. Not benchmarked.
 - **Thread safety.** The node loop may run in a worker thread, so the SQLite memory uses `check_same_thread=False` plus a lock
   (found by running the CLI in mock mode; there is a regression test).
-- **Out of scope this session** (not built): node discovery/routing, offline sync queue, MQTT adapter.
+- Node discovery/routing, the offline outbox and the MQTT adapter were added in a later session (sections below).
 - **Mock realism.** The mock does not model mode differences (threads/context) in speed or CPU, so dummy B4 bars look similar
   across modes. That is expected; real differences can only come from the owner's run.
 

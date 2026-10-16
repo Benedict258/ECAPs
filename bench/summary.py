@@ -14,7 +14,7 @@ def write(mock: bool) -> str:
     env = json.loads((out_dir(mock) / "environment.json").read_text())
     L = []
     if mock:
-        L += ["> **DUMMY DATA from MockBackend, generated in a cloud container. NOT measurements. Do not use on the poster.**", ""]
+        L += ["> **DUMMY DATA from MockBackend, generated in a cloud container. NOT measurements. No real model was run. Do not use on the poster.**", ""]
     L += ["# ECAPs Node Runtime: results summary", "", "Research prototype. Stand-in reference machine, not ECAPs hardware.", "",
           f"**{footer_line(env)}**", ""]
     b1, b2, b3, b4 = (load_result(n, mock) for n in ("b1_overhead", "b2_autofit", "b3_offline", "b4_power"))
@@ -54,14 +54,21 @@ def write(mock: bool) -> str:
                      f"{_f(m['cpu_seconds_per_task'], 3)} | {_f(m['wall_time_s'], 2)} | {_f(m['correct'], 2)} / {m['tasks']} |")
         L += ["", "*Caption F4:* Same 20 tasks in each power mode (threads, max output tokens, context size and model tier change by mode; battery level is simulated). "
               "CPU-seconds per task is a proxy for energy, not a measurement of it.", ""]
-    L += ["## Not run"]
+    missing = []
     for name, res in (("B1 overhead / F1", b1), ("B2 auto-fit / F2", b2), ("B3 offline loop / F3", b3), ("B4 power modes / F4", b4)):
         if not res:
-            L += [f"- {name}: not run (no results file present)."]
-    L += ["- Node discovery / request routing and the offline sync queue: not built.",
-          "- Serial/ESP32 adapter: tested only against an in-memory fake port; no real ESP32 test was run.",
+            missing.append(f"- {name}: not run (no results file present).")
+    if missing:
+        L += ["## Not run"] + missing
+    L += ["", "## Unverified or not measured (applies to every run)",
+          "- Serial/ESP32 adapter: tested only against an in-memory fake port; the example ESP32 sketch has not been compiled or run.",
+          "- MQTT adapter: tested only against an in-memory fake broker; never run against a real broker or device.",
+          "- Node discovery and request routing: tested on localhost only (several processes on 127.0.0.1); not on a real LAN; throughput gain not measured.",
+          "- Offline-first outbox: cloud sync tested only against a localhost server; the cloud endpoint is a stub, off by default.",
           "- Management API (/status /models /metrics): functional tests only; not benchmarked.",
-          "- Energy: not measured. CPU-seconds is a proxy; no energy saving is claimed."]
+          "- Model licences: unverified (see docs/MODELS.md).",
+          "- Energy: not measured. CPU-seconds is a proxy; no energy saving is claimed.",
+          "- docs/NODE_SPEC_PROPOSED.md: proposed arithmetic, not measurements."]
     p = out_dir(mock) / "summary.md"
     p.write_text("\n".join(L) + "\n")
     return str(p)

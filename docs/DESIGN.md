@@ -71,3 +71,13 @@ ECAPs Node Runtime: **research prototype**. Wraps llama.cpp; no custom silicon.
 - Known limitations: load figures are up to one announce interval stale (so bursts can pile onto one peer); no authentication of announcements;
   the optional shared token is sent in clear over HTTP; no TLS; the generate endpoint binds to 127.0.0.1 unless `--host` is changed deliberately;
   no fairness or queue limits beyond a body-size and max-token cap. Throughput gains were **not measured**.
+
+## MQTT device adapter
+- `ecaps/mqtt_device.py` (optional `paho-mqtt`; topics listed in the module docstring). The simulated feed stays the default; select MQTT with
+  `"device": {"type": "mqtt", "host": ..., "prefix": ...}` in `ecaps.config.json` (broker password, if any, from `$ECAPS_MQTT_PASSWORD`).
+- Same honesty rule as serial: with `require_ack` (default true) a pump or alert command only counts as done if the device answers `OK` on its ack topic;
+  a rejection or a timeout is an error and node state is not updated. `require_ack: false` publishes and reports "unacknowledged".
+- Sensor values older than `max_age_s` (30 s) are not used; the adapter asks for a fresh reading and fails if none arrives. Malformed, oversized or
+  non-finite messages and unknown topics are dropped and counted.
+- **Tested only against an in-memory fake broker and fake device.** The paho wrapper is only tested for a clean error when the broker is unreachable and when paho is missing;
+  it has not talked to a real broker. No TLS is configured, so use only on a trusted local network. The topic scheme is this project's own and no real device implements it yet.

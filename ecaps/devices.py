@@ -124,13 +124,21 @@ class SerialSensors:
     def close(self): self.port.close()
 
 
-def make_sensors(cfg: dict | None = None):
-    """cfg['device'] = {'type': 'simulated'} (default) or {'type': 'serial', 'port': 'COM3', 'baud': 115200}."""
+def make_sensors(cfg: dict | None = None, mqtt_client=None):
+    """cfg['device'] = {'type': 'simulated'} (default), {'type': 'serial', 'port': 'COM3'} or
+    {'type': 'mqtt', 'host': '127.0.0.1', 'prefix': 'ecaps/device1'} (password from $ECAPS_MQTT_PASSWORD)."""
     d = (cfg or {}).get("device") or {"type": "simulated"}
     if d.get("type", "simulated") == "simulated":
         return SimulatedSensors(d.get("values"), d.get("script"))
     if d["type"] == "serial":
         return SerialSensors(d["port"], d.get("baud", 115200), d.get("timeout", 2.0))
+    if d["type"] == "mqtt":
+        import os
+        from .mqtt_device import MqttSensors, PahoClient
+        client = mqtt_client or PahoClient(d.get("host", "127.0.0.1"), d.get("port", 1883), d.get("username"),
+                                           os.environ.get("ECAPS_MQTT_PASSWORD"))
+        return MqttSensors(d.get("prefix", "ecaps/device1"), client, d.get("timeout", 2.0), d.get("max_age_s", 30.0),
+                           d.get("require_ack", True))
     raise DeviceError(f"unknown device type {d['type']!r}")
 
 

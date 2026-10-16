@@ -2,3 +2,4 @@ psutil>=5.9
 matplotlib>=3.7
 pytest>=7.0
 # optional, only for the serial/ESP32 adapter:  pyserial>=3.5
+# optional, only for the MQTT adapter:  paho-mqtt>=2.0

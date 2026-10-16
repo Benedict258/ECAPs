@@ -8,3 +8,9 @@ Wraps llama.cpp; it does not claim to be faster than llama.cpp.
     pip install -r requirements.txt
     pytest
     python -m ecaps.environment      # writes results/environment.json
+
+## Benchmarks
+    python -m bench.run_all          # real run on your PC (needs llama-server + GGUFs, see docs/MODELS.md)
+    python -m bench.run_all --mock   # plumbing check only; writes DUMMY output to results_dummy/ (git-ignored)
+Real results go to `results/` (raw JSON, figures, `summary.md`). Power is not measured; no energy claims are made.
+Memory budgets are a software setting, not a change to physical RAM.

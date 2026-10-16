@@ -6,3 +6,4 @@ bin/
 *.gguf
 *.sqlite
 .venv/
+results_dummy/

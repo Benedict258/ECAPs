@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 652" role="img" aria-labelledby="t-V8_runtime_stack d-V8_runtime_stack" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V8_runtime_stack">The ECAPs Node Runtime stack</title>
+<desc id="d-V8_runtime_stack">Four layers in order from top to bottom: Device interface, Agent runtime, Model manager, llama.cpp backend. Below them, four side parts: Power-aware modes, Local memory, Management API, Node discovery.</desc>
+<rect x="6" y="8" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="8" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="53" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Device interface</text>
+<rect x="6" y="94" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="94" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="139" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Agent runtime</text>
+<rect x="6" y="180" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="180" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="225" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Model manager</text>
+<rect x="6" y="266" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="266" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="311" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">llama.cpp backend</text>
+<path d="M220 356 V384" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="6 5"/>
+<rect x="6" y="384" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="419" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Power-aware modes</text>
+<rect x="6" y="450" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="485" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Local memory</text>
+<rect x="6" y="516" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="551" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Management API</text>
+<rect x="6" y="582" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="617" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Node discovery</text>
+</svg>

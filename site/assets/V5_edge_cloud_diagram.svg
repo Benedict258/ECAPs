@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 1046 258" role="img" aria-labelledby="t-V5_edge_cloud_diagram d-V5_edge_cloud_diagram" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V5_edge_cloud_diagram">Edge and cloud working together</title>
+<desc id="d-V5_edge_cloud_diagram">Four steps in order: Local first, Escalate when needed, Queue when offline, Update when online.</desc>
+<rect x="0" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="36" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="36" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">1</text>
+<rect x="79" y="84" width="72" height="52" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><path d="M97 100 H133 M97 118 H133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="115" y="200" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Local first</text>
+<path d="M236 125 H264 M256 117 L264 125 L256 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="270" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="306" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="306" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">2</text>
+<rect x="315" y="104" width="50" height="40" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="393" y="76" width="66" height="36" fill="none" stroke="#0B0B0B" stroke-width="3" rx="18"/>
+<path d="M340 104 V90 H389 M381 84 L391 90 L381 96" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="385" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Escalate when</text>
+<text x="385" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">needed</text>
+<path d="M506 125 H534 M526 117 L534 125 L526 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="540" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="576" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="576" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">3</text>
+<rect x="605" y="80" width="90" height="28" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="613" y="98" width="90" height="28" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="621" y="116" width="90" height="28" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<path d="M709 94 L721 106 M721 94 L709 106" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="655" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Queue when</text>
+<text x="655" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">offline</text>
+<path d="M776 125 H804 M796 117 L804 125 L796 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="810" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="846" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="846" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">4</text>
+<rect x="855" y="76" width="66" height="36" fill="none" stroke="#0B0B0B" stroke-width="3" rx="18"/>
+<rect x="945" y="104" width="50" height="40" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<path d="M888 112 V132 H941 M933 126 L943 132 L933 138" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="925" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Update when</text>
+<text x="925" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">online</text>
+</svg>

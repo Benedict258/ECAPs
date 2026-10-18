@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-labelledby="t-V4_node_hub d-V4_node_hub" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V4_node_hub">Node Hub</title>
+<desc id="d-V4_node_hub">A larger shared unit with a second unit linked beside it by a dashed line.</desc>
+<g transform="translate(0 0) scale(1.0)"><rect x="24" y="70" width="150" height="116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 88 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 112 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 136 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="130" y="82" width="30" height="30" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="224" y="118" width="74" height="68" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="238" y="132" width="22" height="22" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M174 150 H224" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="6 5"/></g>
+</svg>

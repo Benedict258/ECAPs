@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-labelledby="t-V9_results_slot d-V9_results_slot" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V9_results_slot">Empty results slot</title>
+<desc id="d-V9_results_slot">A dashed empty frame labelled Results to come. It stays empty until real result files exist.</desc>
+<rect x="3" y="3" width="474" height="294" rx="12" fill="#F5F3EE" stroke="#4A4A45" stroke-width="3" stroke-dasharray="10 8"/>
+<text x="240" y="160" font-size="24" font-weight="600" fill="#4A4A45" text-anchor="middle">Results to come</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 410" role="img" aria-labelledby="t-V7a_chart_bandwidth d-V7a_chart_bandwidth" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V7a_chart_bandwidth">More memory bandwidth, faster text</title>
+<desc id="d-V7a_chart_bandwidth">Bar chart of text speed in tokens per second. 68 GB/s: 14. 100 GB/s: 22. 200 GB/s: 36. 400 GB/s: 61. 800 GB/s: 84, the tallest bar, in amber.</desc>
+<text x="20" y="30" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="start">tokens per second</text>
+<g><title>68 GB/s: 14 tokens per second</title><rect x="40" y="279.4" width="64" height="40.6" fill="#0B0B0B"/><text x="72" y="269.4" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">14</text><text x="72" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">68</text></g>
+<g><title>100 GB/s: 22 tokens per second</title><rect x="144" y="256.2" width="64" height="63.8" fill="#0B0B0B"/><text x="176" y="246.2" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">22</text><text x="176" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">100</text></g>
+<g><title>200 GB/s: 36 tokens per second</title><rect x="248" y="215.6" width="64" height="104.4" fill="#0B0B0B"/><text x="280" y="205.6" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">36</text><text x="280" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">200</text></g>
+<g><title>400 GB/s: 61 tokens per second</title><rect x="352" y="143.1" width="64" height="176.9" fill="#0B0B0B"/><text x="384" y="133.1" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">61</text><text x="384" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">400</text></g>
+<g><title>800 GB/s: 84 tokens per second</title><rect x="456" y="76.4" width="64" height="243.6" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><text x="488" y="66.4" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">84</text><text x="488" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">800</text></g>
+<path d="M8 320 H552" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="280" y="392" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">memory bandwidth, GB/s</text>
+</svg>

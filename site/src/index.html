@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECAPs: AI compute for the last mile</title>
+<meta name="description" content="ECAPs (Edge Computing Agentic Processors) brings AI compute to homes, schools, labs and communities across Africa.">
+<link rel="canonical" href="https://ecaps.benedictisaac.dev/">
+<meta name="theme-color" content="#0B0B0B">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ECAPs">
+<meta property="og:title" content="ECAPs: AI compute for the last mile">
+<meta property="og:description" content="ECAPs (Edge Computing Agentic Processors) brings AI compute to homes, schools, labs and communities across Africa.">
+<meta property="og:url" content="https://ecaps.benedictisaac.dev/">
+<meta property="og:image" content="https://ecaps.benedictisaac.dev/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ECAPs node family: Node Mini, Node and Node Hub under central compute, sharing one software stack. Proposed design.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ECAPs: AI compute for the last mile">
+<meta name="twitter:description" content="ECAPs (Edge Computing Agentic Processors) brings AI compute to homes, schools, labs and communities across Africa.">
+<meta name="twitter:image" content="https://ecaps.benedictisaac.dev/assets/og.png">
+<link rel="icon" href="/assets/V10_favicon.svg" type="image/svg+xml">
+<!--
+NOTES FOR THE DEVELOPER
+1. REPO_URL: single constant at the top of site/build.mjs. build.mjs turns every element marked data-repo into a link when REPO_URL is set, and into a disabled "Repository link coming soon" button when it is empty.
+   "Run it yourself (guide)" and "Read the design notes" are shown disabled until their addresses exist. They are marked GUIDE and NOTES.
+2. Poster PDF: /assets/ECAPs_Poster_Build26-5P.pdf. build.mjs keeps the "Download the poster (PDF)" link only if the file exists in site/assets/ at build time.
+3. Contact: benedictisaac258@gmail.com, +234 904 837 7499, benedictisaac.dev, GitHub Benedict258. Confirm email and phone may be public.
+4. Results area F1 to F4 stays EMPTY until real result files exist. Never publish mock-data figures. The content file gives no captions for F1 to F4, so the slots carry only their labels.
+5. Source links: only addresses that were supplied or are standard (arXiv ids, llama.cpp) are linked. Add addresses for the rest in the sources table.
+6. Fonts are self-hosted (fonts/), Latin subset. Nothing is loaded from other sites. No cookies, no analytics.
+7. Charts V7a and V7b are inline SVG. Their numbers are text inside the SVG. Source of truth: assets/V7a_chart_bandwidth.svg and assets/V7b_chart_cores.svg.
+-->
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- COMPONENT: site-header -->
+<header class="site-header" id="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="ECAPs, back to top"><svg viewBox="0 0 64 64" aria-hidden="true" font-family="Inter, system-ui, sans-serif" >
+<rect width="64" height="64" fill="#F5F3EE"/><path d="M54 22 V10 H10 V54 H54 V42" fill="none" stroke="#0B0B0B" stroke-width="6" stroke-linejoin="miter"/><rect x="24" y="24" width="16" height="16" fill="#F2A900"/>
+</svg><span>ECAPs</span></a>
+    <nav class="nav-inline" aria-label="Main">
+      <a href="#problem">Problem</a><a href="#approach">Approach</a><a href="#nodes">Nodes</a><a href="#runtime">Runtime</a><a href="#partner">Partner</a><a href="#contact">Contact</a>
+    </nav>
+    <details class="menu" id="menu">
+      <summary>Menu</summary>
+      <nav class="menu-panel" aria-label="All sections">
+        <ul>
+          <li><a href="#problem">Problem</a></li><li><a href="#approach">Approach</a></li><li><a href="#nodes">Nodes</a></li><li><a href="#how">How it works</a></li><li><a href="#bandwidth">Bandwidth</a></li><li><a href="#specs">Specs</a></li><li><a href="#runtime">Runtime</a></li><li><a href="#partner">Partner</a></li><li><a href="#sources">Sources</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- SECTION 1: Hero (#top) -->
+<section class="dark hero on-dark" aria-labelledby="h-hero">
+  <div class="wrap grid">
+    <div>
+      <span class="badge">Research and development stage</span>
+      <h1 id="h-hero">AI that works where the grid, the cloud and the budget don't reach.</h1>
+      <p class="sub">ECAPs (Edge Computing Agentic Processors) brings AI compute to homes, schools, labs and communities across Africa. It works alongside central AI infrastructure, and carries its value to the last mile.</p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#sources">Read the research</a>
+        <a class="btn btn-outline" data-repo href="">See the code</a>
+        <a class="btn btn-link" href="#partner">Partner with us <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10 H16 M11 5 L16 10 L11 15" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a class="btn btn-link" data-poster href="/assets/ECAPs_Poster_Build26-5P.pdf">Download the poster (PDF)</a>
+      </div>
+      <p class="meta">Presented as poster Build26/5P at BUILD26, Africa's Shared Compute and AI Infrastructure Conference, Abuja, October 2026.</p>
+    </div>
+    <div class="panel"><svg viewBox="-3 -3 646 546" role="img" aria-labelledby="t-V1_hero_node_family-1 d-V1_hero_node_family-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V1_hero_node_family-1">Node family with central compute</title>
+<desc id="d-V1_hero_node_family-1">Central compute sits above three nodes, Node Mini, Node and Node Hub, joined by a dashed link labelled when online. One bar under all three reads ECAPs Node Runtime: one software stack for all three. A tag reads Proposed design.</desc>
+<rect x="170" y="6" width="300" height="76" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="38"/>
+<text x="320" y="54" font-size="30" font-weight="700" fill="#0B0B0B" text-anchor="middle">Central compute</text>
+<path d="M320 82 V150" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="8 6"/>
+<text x="338" y="124" font-size="30" font-weight="600" fill="#4A4A45" text-anchor="start">when online</text>
+<path d="M96 150 H544" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="8 6"/>
+<path d="M96 150 V176" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="8 6"/>
+<path d="M320 150 V176" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="8 6"/>
+<path d="M544 150 V176" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="8 6"/>
+<rect x="0" y="176" width="192" height="200" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+
+<rect x="224" y="176" width="192" height="200" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+
+<rect x="448" y="176" width="192" height="200" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+
+<g transform="translate(8 190) scale(0.56)"><rect x="24" y="118" width="152" height="58" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M64 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M88 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M112 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M136 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M160 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="34" y="128" width="40" height="28" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M100 118 V92 M124 118 V92" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="76" y="36" width="72" height="56" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="92" y="52" width="40" height="24" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(218 190) scale(0.6)"><rect x="100" y="110" width="100" height="70" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="114" y="126" width="28" height="28" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><path d="M154 134 H186 M154 150 H186" fill="none" stroke="#0B0B0B" stroke-width="3"/><polygon points="206,52 262,52 250,92 194,92" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M224 52 L216 92 M243 52 L235 92 M200 72 H256" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M228 92 V110" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="214" y="138" width="36" height="24" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="250" y="145" width="6" height="10" fill="#0B0B0B"/><path d="M20 120 L52 88 L84 120" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="30" y="120" width="44" height="56" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="46" y="144" width="12" height="32" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M84 150 H100" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="5 4"/></g>
+<g transform="translate(446 196) scale(0.58)"><rect x="24" y="70" width="150" height="116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 88 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 112 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 136 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="130" y="82" width="30" height="30" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="224" y="118" width="74" height="68" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="238" y="132" width="22" height="22" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M174 150 H224" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="6 5"/></g>
+<text x="96" y="352" font-size="30" font-weight="700" fill="#0B0B0B" text-anchor="middle">Node Mini</text>
+<text x="320" y="352" font-size="30" font-weight="700" fill="#0B0B0B" text-anchor="middle">Node</text>
+<text x="544" y="352" font-size="30" font-weight="700" fill="#0B0B0B" text-anchor="middle">Node Hub</text>
+<rect x="0" y="396" width="640" height="88" fill="#0B0B0B" rx="12"/>
+<text x="320" y="432" font-size="30" font-weight="700" fill="#F5F3EE" text-anchor="middle">ECAPs Node Runtime:</text>
+<text x="320" y="468" font-size="30" font-weight="600" fill="#F5F3EE" text-anchor="middle">one software stack for all three</text>
+<rect x="0" y="498" width="290" height="42" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="20"/>
+<text x="145" y="528" font-size="30" font-weight="600" fill="#0B0B0B" text-anchor="middle">Proposed design</text>
+</svg></div>
+  </div>
+</section>
+
+<!-- SECTION 2: The problem (#problem) -->
+<section id="problem" aria-labelledby="h-problem">
+  <div class="wrap">
+    <span class="label">The problem</span>
+    <h2 id="h-problem">Inclusive AI needs inclusive infrastructure.</h2>
+    <p class="lead">Central compute is the base of Africa's AI future, but AI-ready compute is still scarce. Inclusive AI needs more of it, in more places.</p>
+    <p>AI-ready compute is scarce, so many institutions, schools, labs and communities cannot access AI, especially where power is unstable and connections are weak.</p>
+    <p>Africa has 18% of the world's people but little AI-ready compute. Central infrastructure is the foundation, and it takes time to build. Meanwhile institutions, schools, labs and communities are left waiting, or pay again and again to rent compute from far away. ECAPs adds AI compute close to people, alongside central infrastructure.</p>
+
+    <!-- COMPONENT: number-tiles -->
+    <div class="tiles">
+      <div class="tile"><div class="num">18%</div><p class="reads">of the world's people live in Africa</p><svg viewBox="0 0 324 52" role="img" aria-labelledby="t-V6a_bar_18-1 d-V6a_bar_18-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V6a_bar_18-1">18 out of 100</title>
+<desc id="d-V6a_bar_18-1">A bar on a 0 to 100 scale with 18 parts filled in amber.</desc>
+<rect x="12" y="24" width="300" height="22" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="13.5" y="25.5" width="53.46" height="19" fill="#F2A900"/>
+</svg><p class="means">A large part of the world's AI future is here.</p></div>
+      <div class="tile"><div class="num">0.6%</div><p class="reads">of the world's data-centre capacity is in Africa</p><svg viewBox="0 0 324 52" role="img" aria-labelledby="t-V6b_bar_06-1 d-V6b_bar_06-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V6b_bar_06-1">0.6 out of 100</title>
+<desc id="d-V6b_bar_06-1">The same bar on the same 0 to 100 scale. The amber part is drawn at its true width, a thin sliver, and a small amber arrow above points at it.</desc>
+<rect x="12" y="24" width="300" height="22" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="13.5" y="25.5" width="1.78" height="19" fill="#F2A900"/>
+<polygon points="15,21 6,3 24,3" fill="#F2A900" stroke="#0B0B0B" stroke-width="2" stroke-linejoin="miter"/>
+</svg><p class="means">The compute that runs AI sits mostly elsewhere.</p></div>
+      <div class="tile"><div class="num">5%</div><p class="reads">of Africa's data centres are AI-ready</p><svg viewBox="0 0 524 120" role="img" aria-labelledby="t-V6c_racks_5-1 d-V6c_racks_5-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V6c_racks_5-1">1 of 20 racks</title>
+<desc id="d-V6c_racks_5-1">Twenty data-centre rack icons in two rows of ten. The first is filled amber and the other nineteen are outline only.</desc>
+<g transform="translate(3 3)"><rect x="0" y="0" width="40" height="48" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(55 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(107 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(159 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(211 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(263 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(315 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(367 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(419 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(471 3)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(3 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(55 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(107 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(159 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(211 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(263 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(315 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(367 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(419 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+<g transform="translate(471 61)"><rect x="0" y="0" width="40" height="48" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M8 16 H32 M8 32 H32" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+</svg><p class="means">Few facilities can run AI work today.</p></div>
+    </div>
+    <p class="serif-line">Africa's share of the world's compute is far smaller than its share of the world's people.</p>
+    <p class="small muted">World Bank, Africa Economic Update, October 2026.</p>
+
+    <h3>What this means for people</h3>
+    <ul class="marks">
+      <li>Schools, labs, institutions and community groups pay again and again to rent AI compute.</li>
+      <li>Unstable power and weak connectivity cut off AI that depends on the cloud.</li>
+      <li>Students and small teams need custom hardware for every robotics project.</li>
+      <li>Building central compute takes time. ECAPs adds AI compute close to people, alongside it.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 3: Our approach (#approach) -->
+<section id="approach" class="alt" aria-labelledby="h-approach">
+  <div class="wrap">
+    <span class="label">Our approach</span>
+    <h2 id="h-approach">A complementary layer: accessible edge compute</h2>
+    <p class="lead">ECAPs proposes a complementary layer to Africa's central compute investment: accessible edge compute that extends AI's reach into homes, institutions, communities and technical systems that central infrastructure will take time to serve. We do not treat decentralisation as the goal. It is the mechanism by which central investment turns into everyday, widespread use. Every node is a new endpoint, a new source of demand and a broader market for the compute and chip providers building Africa's core infrastructure.</p>
+    <ul class="marks">
+      <li>A node runs AI models locally, at home, in a school or in a community.</li>
+      <li>It keeps working offline, and is built for solar and low power.</li>
+      <li>Heavy tasks go to larger cloud models when a connection is there.</li>
+      <li>Every node becomes a new endpoint for central compute providers.</li>
+      <li>One architecture and one software stack, in three sizes.</li>
+    </ul>
+    <!-- COMPONENT: edge-cloud-diagram -->
+    <div class="v5"><svg viewBox="-3 -3 1046 258" role="img" aria-labelledby="t-V5_edge_cloud_diagram-1 d-V5_edge_cloud_diagram-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V5_edge_cloud_diagram-1">Edge and cloud working together</title>
+<desc id="d-V5_edge_cloud_diagram-1">Four steps in order: Local first, Escalate when needed, Queue when offline, Update when online.</desc>
+<rect x="0" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="36" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="36" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">1</text>
+<rect x="79" y="84" width="72" height="52" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><path d="M97 100 H133 M97 118 H133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="115" y="200" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Local first</text>
+<path d="M236 125 H264 M256 117 L264 125 L256 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="270" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="306" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="306" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">2</text>
+<rect x="315" y="104" width="50" height="40" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="393" y="76" width="66" height="36" fill="none" stroke="#0B0B0B" stroke-width="3" rx="18"/>
+<path d="M340 104 V90 H389 M381 84 L391 90 L381 96" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="385" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Escalate when</text>
+<text x="385" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">needed</text>
+<path d="M506 125 H534 M526 117 L534 125 L526 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="540" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="576" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="576" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">3</text>
+<rect x="605" y="80" width="90" height="28" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="613" y="98" width="90" height="28" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="621" y="116" width="90" height="28" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<path d="M709 94 L721 106 M721 94 L709 106" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="655" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Queue when</text>
+<text x="655" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">offline</text>
+<path d="M776 125 H804 M796 117 L804 125 L796 133" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<rect x="810" y="0" width="230" height="250" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="12"/>
+<circle cx="846" cy="38" r="22" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="846" y="47" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="middle">4</text>
+<rect x="855" y="76" width="66" height="36" fill="none" stroke="#0B0B0B" stroke-width="3" rx="18"/>
+<rect x="945" y="104" width="50" height="40" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<path d="M888 112 V132 H941 M933 126 L943 132 L933 138" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="925" y="186" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">Update when</text>
+<text x="925" y="216" font-size="24" font-weight="700" fill="#0B0B0B" text-anchor="middle">online</text>
+</svg></div>
+    <ol class="steps only-mobile" aria-label="Edge and cloud steps">
+      <li><b>1</b><span class="res">Local first</span></li>
+      <li><b>2</b><span class="res">Escalate when needed</span></li>
+      <li><b>3</b><span class="res">Queue when offline</span></li>
+      <li><b>4</b><span class="res">Update when online</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SECTION 4: The node family (#nodes) -->
+<section id="nodes" aria-labelledby="h-nodes">
+  <div class="wrap">
+    <span class="label">The node family</span>
+    <h2 id="h-nodes">One architecture, three node sizes</h2>
+    <p class="lead">ECAPs is a two-tier edge compute system, shown here as three sizes of one design. The sizes differ in compute, memory and power. They share one architecture and one software stack. All sizes below are proposed designs.</p>
+    <!-- COMPONENT: node-card -->
+    <div class="cards-3">
+      <article class="node-card"><span class="tag">Proposed design</span><svg viewBox="0 0 320 220" role="img" aria-labelledby="t-V2_node_mini-1 d-V2_node_mini-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V2_node_mini-1">Node Mini</title>
+<desc id="d-V2_node_mini-1">A small plug-in module, shown in amber, attached to a generic host board.</desc>
+<g transform="translate(0 0) scale(1.0)"><rect x="24" y="118" width="152" height="58" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M64 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M88 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M112 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M136 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M160 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="34" y="128" width="40" height="28" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M100 118 V92 M124 118 V92" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="76" y="36" width="72" height="56" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="92" y="52" width="40" height="24" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+</svg><h3>Node Mini</h3><dl><dt>Who it is for</dt><dd>Robotics and engineering systems: student projects, research labs, small engineering teams</dd><dt>What it does</dt><dd>A plug-in compute add-on that gives a host board, such as an ESP32 or a Raspberry Pi, its own local AI. It brings its own fast memory. Its connection to the host (USB, SPI/UART, M.2 or similar) is still being defined.</dd></dl></article>
+      <article class="node-card"><span class="tag">Proposed design</span><svg viewBox="0 0 320 220" role="img" aria-labelledby="t-V3_node-1 d-V3_node-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V3_node-1">Node</title>
+<desc id="d-V3_node-1">A compact unit with a small solar panel, a battery symbol and a simple house shape.</desc>
+<g transform="translate(0 0) scale(1.0)"><rect x="100" y="110" width="100" height="70" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="114" y="126" width="28" height="28" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><path d="M154 134 H186 M154 150 H186" fill="none" stroke="#0B0B0B" stroke-width="3"/><polygon points="206,52 262,52 250,92 194,92" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M224 52 L216 92 M243 52 L235 92 M200 72 H256" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M228 92 V110" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="214" y="138" width="36" height="24" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="250" y="145" width="6" height="10" fill="#0B0B0B"/><path d="M20 120 L52 88 L84 120" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="30" y="120" width="44" height="56" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="46" y="144" width="12" height="32" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M84 150 H100" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="5 4"/></g>
+</svg><h3>Node (Tier 1)</h3><dl><dt>Who it is for</dt><dd>Homes and institutions: schools, labs, universities, community organisations, builders</dd><dt>What it does</dt><dd>A compact, plug-and-play unit for local AI without dependence on constant cloud connectivity or a stable grid. Built for solar and low power.</dd></dl></article>
+      <article class="node-card"><span class="tag">Proposed design</span><svg viewBox="0 0 320 220" role="img" aria-labelledby="t-V4_node_hub-1 d-V4_node_hub-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V4_node_hub-1">Node Hub</title>
+<desc id="d-V4_node_hub-1">A larger shared unit with a second unit linked beside it by a dashed line.</desc>
+<g transform="translate(0 0) scale(1.0)"><rect x="24" y="70" width="150" height="116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 88 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 112 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 136 H116" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="130" y="82" width="30" height="30" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="224" y="118" width="74" height="68" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="238" y="132" width="22" height="22" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M174 150 H224" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="6 5"/></g>
+</svg><h3>Node Hub (Tier 2)</h3><dl><dt>Who it is for</dt><dd>Neighbourhoods, schools, cooperatives and small organisations</dd><dt>What it does</dt><dd>A shared community node where people pool access to AI-ready compute. Users pay per use. ECAPs manages it. Several nodes can be networked, like racks, to serve more people.</dd></dl></article>
+    </div>
+    <p class="shared-bar">ECAPs Node Runtime: one software stack for all three</p>
+    <p>Nodes are networked to serve more users. They are not designed to split one model across machines.</p>
+  </div>
+</section>
+
+<!-- SECTION 5: How it works (#how) -->
+<section id="how" class="alt" aria-labelledby="h-how">
+  <div class="wrap">
+    <span class="label">How it works</span>
+    <h2 id="h-how">How it works</h2>
+    <div class="blocks">
+      <div class="block">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="12" y="12" width="24" height="24" fill="none" stroke="#0B0B0B" stroke-width="2"/><rect x="20" y="20" width="8" height="8" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><path d="M12 24 H4 M36 24 H44 M24 12 V4 M24 36 V44" stroke="#0B0B0B" stroke-width="2"/></svg>
+        <h3>Agentic: AI that acts locally</h3>
+        <p>Agentic means a node runs local AI agents that sense, decide and act without waiting for the cloud. An agent reads a sensor, a small local model decides what to do, and the node acts, for example switching a pump on or logging an alert. ECAPs supports this with four things: an always-on, low-power design; input and output for sensors and machines; a small local memory of recent events; and a managed runtime that picks a model that fits the node.</p>
+      </div>
+      <div class="block">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 20 Q24 4 42 20 M12 27 Q24 17 36 27" fill="none" stroke="#0B0B0B" stroke-width="2"/><rect x="21" y="32" width="6" height="6" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><path d="M8 42 L40 6" stroke="#0B0B0B" stroke-width="2"/></svg>
+        <h3>Offline first</h3>
+        <ul class="marks">
+          <li>Works with no internet: the local model, the agent loop, local memory and users on the local network.</li>
+          <li>Uses the connection when it is there: escalating heavy tasks to a larger cloud model, downloading updates, remote monitoring.</li>
+          <li>When the connection drops, events and actions are queued on the node and synced later (software prototype).</li>
+        </ul>
+      </div>
+      <div class="block">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="20" r="8" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><path d="M24 6 V2 M24 38 V34 M10 20 H6 M42 20 H38 M14 10 L11 7 M34 10 L37 7" stroke="#0B0B0B" stroke-width="2"/><path d="M8 46 H40 L36 38 H12 Z" fill="none" stroke="#0B0B0B" stroke-width="2"/></svg>
+        <h3>Built for solar and low power</h3>
+        <p>Nodes are designed with DC input and low idle draw so they can run from a dedicated solar system or another renewable source. A power-aware mode (eco, normal, boost) lets the software adjust to the energy available.</p>
+        <ul class="power" aria-label="Power modes"><li>Eco</li><li>Normal</li><li>Boost</li></ul>
+      </div>
+      <div class="block">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="28" width="16" height="12" fill="none" stroke="#0B0B0B" stroke-width="2"/><rect x="24" y="6" width="20" height="12" rx="6" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M12 28 V16 H22" stroke="#0B0B0B" stroke-width="2" fill="none" stroke-dasharray="4 3"/><rect x="8" y="32" width="8" height="4" fill="#F2A900"/></svg>
+        <h3>Edge and cloud, working together</h3>
+        <table class="tbl"><caption class="sr">Edge and cloud patterns</caption><thead><tr><th scope="col">Pattern</th><th scope="col">How it works</th></tr></thead><tbody>
+          <tr><th scope="row">Local first</th><td data-label="How it works">The small local model answers by default.</td></tr>
+          <tr><th scope="row">Escalate when needed</th><td data-label="How it works">If a task is too heavy, the node passes it to a larger cloud model when connected.</td></tr>
+          <tr><th scope="row">Local data, cloud reasoning</th><td data-label="How it works">Raw data stays on the node. Only what is needed goes up.</td></tr>
+          <tr><th scope="row">Update when online</th><td data-label="How it works">The node pulls new models and software when there is a connection.</td></tr>
+        </tbody></table>
+        <p class="small muted">This follows the edge and cloud collaboration patterns described in the research literature (see the sources).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: Why memory bandwidth (#bandwidth) -->
+<section id="bandwidth" aria-labelledby="h-bw">
+  <div class="wrap">
+    <span class="label">Why memory bandwidth</span>
+    <h2 id="h-bw">Why memory bandwidth, not peak TOPS</h2>
+    <p class="lead">On small devices, how fast an AI model writes text is set by memory bandwidth, the number of bytes per second the chip can read from memory, not by TOPS, the peak maths figure. To write each new word (token), the chip reads the model's whole set of weights from memory once. The maths per token is small, so the chip mostly waits for data.</p>
+    <p><strong>Rule of thumb:</strong> tokens per second is at most memory bandwidth divided by model size in bytes.</p>
+    <!-- COMPONENT: formula-chips -->
+    <p class="formula" aria-label="memory bandwidth divided by model size equals ceiling on text speed"><span class="chip">memory bandwidth</span><span class="op" aria-hidden="true">÷</span><span class="chip">model size</span><span class="op" aria-hidden="true">=</span><span class="chip amber">ceiling on text speed</span></p>
+    <p><strong>Worked example:</strong> an 8-billion-parameter model on a board with about 100 GB/s of memory bandwidth.</p>
+    <table class="tbl"><caption class="sr">Worked example</caption><thead><tr><th scope="col">Precision</th><th scope="col">Bytes per weight</th><th scope="col">Model size</th><th scope="col">Speed ceiling</th></tr></thead><tbody>
+      <tr><th scope="row">16-bit</th><td data-label="Bytes per weight">2</td><td data-label="Model size">about 16 GB</td><td data-label="Speed ceiling">about 6 tokens per second</td></tr>
+      <tr><th scope="row">8-bit</th><td data-label="Bytes per weight">1</td><td data-label="Model size">about 8 GB</td><td data-label="Speed ceiling">about 12 tokens per second</td></tr>
+      <tr><th scope="row">4-bit</th><td data-label="Bytes per weight">0.5</td><td data-label="Model size">about 4 GB</td><td data-label="Speed ceiling">about 25 tokens per second</td></tr>
+    </tbody></table>
+    <p class="small muted">The example is a back-of-envelope ceiling from the rule above. Real speeds are lower.</p>
+
+    <h3>Measured evidence</h3>
+    <p>The llama.cpp project keeps a public benchmark thread that runs one model (Llama 2 7B, 4-bit), with the same software and the same test (generating 128 tokens), on many Apple M-series chips and lists each chip's memory bandwidth beside its speed. These are other people's measurements on other hardware, not ECAPs results. They show the pattern the design relies on.</p>
+    <!-- COMPONENT: chart (V7a, V7b) -->
+    <div class="charts">
+      <figure class="chart"><h3>More memory bandwidth, faster text</h3><svg viewBox="0 0 560 410" role="img" aria-labelledby="t-V7a_chart_bandwidth-1 d-V7a_chart_bandwidth-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V7a_chart_bandwidth-1">More memory bandwidth, faster text</title>
+<desc id="d-V7a_chart_bandwidth-1">Bar chart of text speed in tokens per second. 68 GB/s: 14. 100 GB/s: 22. 200 GB/s: 36. 400 GB/s: 61. 800 GB/s: 84, the tallest bar, in amber.</desc>
+<text x="20" y="30" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="start">tokens per second</text>
+<g><title>68 GB/s: 14 tokens per second</title><rect x="40" y="279.4" width="64" height="40.6" fill="#0B0B0B"/><text x="72" y="269.4" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">14</text><text x="72" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">68</text></g>
+<g><title>100 GB/s: 22 tokens per second</title><rect x="144" y="256.2" width="64" height="63.8" fill="#0B0B0B"/><text x="176" y="246.2" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">22</text><text x="176" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">100</text></g>
+<g><title>200 GB/s: 36 tokens per second</title><rect x="248" y="215.6" width="64" height="104.4" fill="#0B0B0B"/><text x="280" y="205.6" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">36</text><text x="280" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">200</text></g>
+<g><title>400 GB/s: 61 tokens per second</title><rect x="352" y="143.1" width="64" height="176.9" fill="#0B0B0B"/><text x="384" y="133.1" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">61</text><text x="384" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">400</text></g>
+<g><title>800 GB/s: 84 tokens per second</title><rect x="456" y="76.4" width="64" height="243.6" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/><text x="488" y="66.4" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">84</text><text x="488" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">800</text></g>
+<path d="M8 320 H552" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+<text x="280" y="392" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">memory bandwidth, GB/s</text>
+</svg></figure>
+      <figure class="chart"><h3>More compute, same bandwidth: little gain</h3><svg viewBox="0 0 560 410" role="img" aria-labelledby="t-V7b_chart_cores-1 d-V7b_chart_cores-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V7b_chart_cores-1">More compute, same bandwidth: little gain</title>
+<desc id="d-V7b_chart_cores-1">Bar chart on the same scale as the bandwidth chart. At 400 GB/s: 24 cores 54.6 and 32 cores 61.2 tokens per second. At 800 GB/s: 48 cores 74.9 and 64 cores 83.7 tokens per second.</desc>
+<text x="20" y="30" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="start">tokens per second</text>
+<g><title>24 cores: 54.6 tokens per second</title><rect x="50" y="161.7" width="80" height="158.3" fill="#0B0B0B"/><text x="90" y="151.7" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">54.6</text><text x="90" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">24</text><text x="90" y="382" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">cores</text></g>
+<g><title>32 cores: 61.2 tokens per second</title><rect x="150" y="142.5" width="80" height="177.5" fill="#0B0B0B"/><text x="190" y="132.5" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">61.2</text><text x="190" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">32</text><text x="190" y="382" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">cores</text></g>
+<g><title>48 cores: 74.9 tokens per second</title><rect x="330" y="102.8" width="80" height="217.2" fill="#0B0B0B"/><text x="370" y="92.8" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">74.9</text><text x="370" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">48</text><text x="370" y="382" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">cores</text></g>
+<g><title>64 cores: 83.7 tokens per second</title><rect x="430" y="77.3" width="80" height="242.7" fill="#0B0B0B"/><text x="470" y="67.3" font-size="28" font-weight="700" fill="#0B0B0B" text-anchor="middle">83.7</text><text x="470" y="352" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">64</text><text x="470" y="382" font-size="24" font-weight="500" fill="#4A4A45" text-anchor="middle">cores</text></g>
+<path d="M8 320 H552" fill="none" stroke="#0B0B0B" stroke-width="3"/>
+</svg>
+        <div class="pairs"><p><strong>At 400 GB/s</strong><br>+33% compute cores, about +12% speed</p><p><strong>At 800 GB/s</strong><br>+33% compute cores, about +12% speed</p></div>
+      </figure>
+    </div>
+    <p class="small muted">Same model (Llama 2 7B, 4-bit), same software (llama.cpp), measured by others across Apple M-series chips. Not ECAPs results. Source: <a href="https://github.com/ggml-org/llama.cpp/discussions/4167" target="_blank" rel="noopener">llama.cpp discussion #4167, Performance of llama.cpp on Apple Silicon M-series</a>.</p>
+    <p>More bandwidth gives faster text. A third more compute cores at the same bandwidth gives about 12% more speed. Speed does not grow in step with bandwidth, because other limits start to matter at the top, so the formula above is a ceiling.</p>
+    <ul class="marks">
+      <li>Half the bandwidth means about half the speed.</li>
+      <li>Half the bits per weight means about double the speed. This is why quantised models suit edge devices.</li>
+      <li>Serving several users together (batching) lets one read of the weights help all of them. This is why a shared node gets more from the same hardware.</li>
+      <li>So ECAPs ranks memory size and memory bandwidth per watt above peak TOPS when choosing an architecture.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 7: Proposed node specifications (#specs) -->
+<section id="specs" class="alt" aria-labelledby="h-specs">
+  <div class="wrap">
+    <span class="label">Proposed</span>
+    <h2 id="h-specs">Proposed node specifications</h2>
+    <p class="lead">These are the proposed targets for each node size. They come from the rules below. They are design targets for the architecture we are proposing.</p>
+    <!-- COMPONENT: specs-table (desktop) -->
+    <table class="tbl only-desktop"><caption>Proposed</caption><thead><tr><th scope="col"><span class="sr">Spec</span></th><th scope="col">Node Mini</th><th scope="col">Node</th><th scope="col">Node Hub</th></tr></thead><tbody>
+      <tr><th scope="row">Models (4-bit)</th><td>1 to 3 billion parameters</td><td>about 7 billion</td><td>13 to 30 billion</td></tr>
+      <tr><th scope="row">Memory</th><td>2 to 4 GB</td><td>about 8 GB</td><td>about 32 GB</td></tr>
+      <tr><th scope="row">Memory bandwidth class</th><td>about 25 to 50 GB/s</td><td>about 100 GB/s</td><td>200 GB/s or more</td></tr>
+      <tr><th scope="row">Power</th><td>3 to 5 W</td><td>10 to 25 W</td><td>40 to 60 W</td></tr>
+      <tr><th scope="row">Speed ceiling</th><td>about 17 tokens/s for a 3B model</td><td>about 28 tokens/s for a 7B model</td><td>about 13 tokens/s for a 30B model</td></tr>
+    </tbody></table>
+    <!-- COMPONENT: spec-card (mobile) -->
+    <div class="only-mobile" aria-label="Proposed node specifications">
+      <article class="spec-card"><h3>Node Mini <span class="tag inline">Proposed</span></h3><dl><div><dt>Models (4-bit)</dt><dd>1 to 3 billion parameters</dd></div><div><dt>Memory</dt><dd>2 to 4 GB</dd></div><div><dt>Memory bandwidth class</dt><dd>about 25 to 50 GB/s</dd></div><div><dt>Power</dt><dd>3 to 5 W</dd></div><div><dt>Speed ceiling</dt><dd>about 17 tokens/s for a 3B model</dd></div></dl></article>
+      <article class="spec-card"><h3>Node <span class="tag inline">Proposed</span></h3><dl><div><dt>Models (4-bit)</dt><dd>about 7 billion</dd></div><div><dt>Memory</dt><dd>about 8 GB</dd></div><div><dt>Memory bandwidth class</dt><dd>about 100 GB/s</dd></div><div><dt>Power</dt><dd>10 to 25 W</dd></div><div><dt>Speed ceiling</dt><dd>about 28 tokens/s for a 7B model</dd></div></dl></article>
+      <article class="spec-card"><h3>Node Hub <span class="tag inline">Proposed</span></h3><dl><div><dt>Models (4-bit)</dt><dd>13 to 30 billion</dd></div><div><dt>Memory</dt><dd>about 32 GB</dd></div><div><dt>Memory bandwidth class</dt><dd>200 GB/s or more</dd></div><div><dt>Power</dt><dd>40 to 60 W</dd></div><div><dt>Speed ceiling</dt><dd>about 13 tokens/s for a 30B model</dd></div></dl></article>
+    </div>
+    <ul class="marks gap-top">
+      <li>Weights in GB = billions of parameters × bytes per weight (16-bit 2, 8-bit 1, 4-bit 0.5).</li>
+      <li>Memory needed is about weights × 1.25, for the runtime and the conversation memory.</li>
+      <li>Speed ceiling is memory bandwidth ÷ weights.</li>
+    </ul>
+    <h3>Sizing the solar system: an example</h3>
+    <p>Assumptions: a node drawing 20 W all day, one day of battery autonomy, 80% of the battery usable, 5 peak sun hours a day and 70% system efficiency.</p>
+    <!-- COMPONENT: step-flow -->
+    <ol class="steps">
+      <li><b>Daily energy</b>20 W × 24 h<span class="res">480 Wh a day</span></li>
+      <li><b>Battery</b>480 Wh ÷ 0.8<span class="res">600 Wh</span></li>
+      <li><b>Solar panel</b>480 Wh ÷ (5 h × 0.7)<span class="res">about 137 W</span></li>
+    </ol>
+    <p class="small muted">Sunshine varies by place and season. Old national records put the Abuja area at roughly 4.85 kWh per square metre per day, so 5 is a reasonable planning figure there. Size every real site from its own data.</p>
+  </div>
+</section>
+
+<!-- SECTION 8: Shared nodes and community (#shared) -->
+<section id="shared" aria-labelledby="h-shared">
+  <div class="wrap">
+    <span class="label">Shared nodes</span>
+    <h2 id="h-shared">Shared nodes and community</h2>
+    <p class="lead">A Node Hub lets neighbourhoods, schools, cooperatives and small organisations pool access to AI-ready compute, so no single household has to own the hardware.</p>
+    <div class="defs">
+      <div class="def"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="8" fill="none" stroke="#0B0B0B" stroke-width="2"/><rect x="19" y="19" width="6" height="6" fill="#F2A900"/><path d="M22 4 V10 M22 34 V40 M4 22 H10 M34 22 H40" stroke="#0B0B0B" stroke-width="2"/></svg><dl><div><dt>Who manages it</dt><dd>ECAPs manages shared nodes: operation, updates and monitoring.</dd></div></dl></div>
+      <div class="def"><svg viewBox="0 0 44 44" aria-hidden="true"><rect x="8" y="14" width="28" height="22" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M8 14 L22 4 L36 14" fill="none" stroke="#0B0B0B" stroke-width="2"/><rect x="18" y="22" width="8" height="14" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/></svg><dl><div><dt>Who owns it</dt><dd>ECAPs does not own them. A provider, an individual or a community group can own a node while ECAPs manages it.</dd></div></dl></div>
+      <div class="def"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M22 12 V32 M16 18 H26 Q29 18 29 21 Q29 24 26 24 H18 Q15 24 15 27 Q15 30 18 30 H28" fill="none" stroke="#0B0B0B" stroke-width="2"/></svg><dl><div><dt>Who pays</dt><dd>users pay per use, which covers power and upkeep. A small optional management fee may come later. It is never compulsory.</dd></div></dl></div>
+      <div class="def"><svg viewBox="0 0 44 44" aria-hidden="true"><path d="M6 36 V16 L22 6 L38 16 V36 Z" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M14 36 V24 H30 V36" fill="none" stroke="#0B0B0B" stroke-width="2" stroke-dasharray="4 3"/></svg><dl><div><dt>Open to anyone</dt><dd>individually owned nodes stay open to everyone. Shared nodes are one option, not the only one.</dd></div></dl></div>
+    </div>
+    <p>Community networks show that shared local infrastructure can work when ownership is local and the money for repairs is planned from the start. Zenzeleni, a cooperative-run network in Mankosi, South Africa, is one example: it started in 2012 and serves almost 6,000 people. The same lesson shapes the Node Hub model.</p>
+    <div class="note-box"><p><strong>Still being worked out:</strong> the billing unit, payment where connectivity is weak, who repairs hardware, and how management scales as nodes multiply.</p></div>
+  </div>
+</section>
+
+<!-- SECTION 9: Robotics and engineering (#robotics) -->
+<section id="robotics" class="alt" aria-labelledby="h-robotics">
+  <div class="wrap cols-2">
+    <div>
+      <span class="label">Robotics and engineering</span>
+      <h2 id="h-robotics">Robotics and engineering systems</h2>
+      <p class="lead">ECAPs began in robotics and engineering. In this setting the same unit works as a plug-and-play compute module, giving robots and embedded systems on-device intelligence and agentic decision-making without building custom compute hardware into every system. This lowers the barrier for student projects, research labs and small engineering teams across Africa, who can build AI-capable robotics and automation on a shared, standard compute layer instead of custom silicon for each project.</p>
+      <ul class="marks">
+        <li>Host boards such as an ESP32 or a Raspberry Pi sense and act. The node adds local AI.</li>
+        <li>A simulated sensor feed and a serial adapter for the ESP32 are part of the reference software.</li>
+      </ul>
+    </div>
+    <div class="v2"><svg viewBox="0 0 320 220" role="img" aria-labelledby="t-V2_node_mini-2 d-V2_node_mini-2" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V2_node_mini-2">Node Mini</title>
+<desc id="d-V2_node_mini-2">A small plug-in module, shown in amber, attached to a generic host board.</desc>
+<g transform="translate(0 0) scale(1.0)"><rect x="24" y="118" width="152" height="58" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M40 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M64 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M88 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M112 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M136 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><path d="M160 176 V190" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="34" y="128" width="40" height="28" fill="none" stroke="#0B0B0B" stroke-width="2"/><path d="M100 118 V92 M124 118 V92" fill="none" stroke="#0B0B0B" stroke-width="3"/><rect x="76" y="36" width="72" height="56" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/><rect x="92" y="52" width="40" height="24" fill="none" stroke="#0B0B0B" stroke-width="2"/></g>
+</svg></div>
+  </div>
+</section>
+
+<!-- SECTION 10: Inclusion and Tech Justice (#inclusion) -->
+<section id="inclusion" class="dark charcoal on-dark" aria-labelledby="h-inclusion">
+  <div class="wrap">
+    <span class="label">Inclusion and Tech Justice</span>
+    <h2 id="h-inclusion" class="sr">Inclusion and Tech Justice</h2>
+    <p class="pull">Tech justice asks who builds technology, who owns it and who controls it. ECAPs puts compute closer to local hands, so everyone has a chance to use and build with AI.</p>
+    <p class="infra">Infrastructure that communities can build on, own and operate.</p>
+    <ul class="marks">
+      <li>More people and institutions can use AI without constant internet or a stable grid.</li>
+      <li>Local models, including optional support for local-language models, can run on the same node.</li>
+      <li>Tech justice has no single definition. Researchers describe it in terms of structural inequality and the history of extraction, and as a question of who develops, owns and has access to computing infrastructure. ECAPs addresses one part of it: access to compute.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SECTION 11: The ECAPs Node Runtime (#runtime) -->
+<section id="runtime" aria-labelledby="h-runtime">
+  <div class="wrap">
+    <span class="label">Runtime</span>
+    <h2 id="h-runtime">The ECAPs Node Runtime</h2>
+    <p class="lead">The ECAPs Node Runtime is the open reference software for every node size. It is a prototype in the research and development stage. It runs on an ordinary computer so that anyone can try and check it. Results shown on this page come from a stand-in reference machine, not from ECAPs hardware.</p>
+    <div class="cols-2 top">
+      <div class="v8"><svg viewBox="0 0 440 652" role="img" aria-labelledby="t-V8_runtime_stack-1 d-V8_runtime_stack-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V8_runtime_stack-1">The ECAPs Node Runtime stack</title>
+<desc id="d-V8_runtime_stack-1">Four layers in order from top to bottom: Device interface, Agent runtime, Model manager, llama.cpp backend. Below them, four side parts: Power-aware modes, Local memory, Management API, Node discovery.</desc>
+<rect x="6" y="8" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="8" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="53" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Device interface</text>
+<rect x="6" y="94" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="94" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="139" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Agent runtime</text>
+<rect x="6" y="180" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="180" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="225" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">Model manager</text>
+<rect x="6" y="266" width="428" height="72" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" rx="8"/>
+<rect x="6" y="266" width="14" height="72" fill="#F2A900" stroke="#0B0B0B" stroke-width="3"/>
+<text x="42" y="311" font-size="26" font-weight="700" fill="#0B0B0B" text-anchor="start">llama.cpp backend</text>
+<path d="M220 356 V384" fill="none" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="6 5"/>
+<rect x="6" y="384" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="419" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Power-aware modes</text>
+<rect x="6" y="450" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="485" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Local memory</text>
+<rect x="6" y="516" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="551" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Management API</text>
+<rect x="6" y="582" width="428" height="52" rx="26" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="3" stroke-dasharray="10 6"/>
+<text x="220" y="617" font-size="24" font-weight="600" fill="#0B0B0B" text-anchor="middle">Node discovery</text>
+</svg></div>
+      <table class="tbl"><caption class="sr">Parts of the runtime</caption><thead><tr><th scope="col">Part</th><th scope="col">What it does</th></tr></thead><tbody>
+        <tr><th scope="row">Backend interface</th><td data-label="What it does">Runs models through llama.cpp, an open-source inference engine (MIT licence).</td></tr>
+        <tr><th scope="row">Model manager</th><td data-label="What it does">Given a memory budget, picks the largest model that fits and explains why.</td></tr>
+        <tr><th scope="row">Agent runtime</th><td data-label="What it does">Sense, plan, act. A model chooses a validated action, the runtime executes it, and a small local memory keeps recent events.</td></tr>
+        <tr><th scope="row">Power-aware modes</th><td data-label="What it does">Eco, normal and boost modes adjust to the energy available.</td></tr>
+        <tr><th scope="row">Device interface</th><td data-label="What it does">A simulated sensor feed, an ESP32 serial adapter and an MQTT adapter.</td></tr>
+        <tr><th scope="row">Offline queue</th><td data-label="What it does">Events and actions are queued on the node and synced when a cloud endpoint is reachable. Cloud sync is off by default.</td></tr>
+        <tr><th scope="row">Node discovery and routing</th><td data-label="What it does">Nodes on a local network find each other and a busy node can hand a request to a less busy one.</td></tr>
+        <tr><th scope="row">Management API</th><td data-label="What it does">Read-only status, models and metrics for a manager.</td></tr>
+      </tbody></table>
+    </div>
+
+    <h3>Benchmarks</h3>
+    <p>Four benchmarks are defined and run with one command: B1 overhead compared with raw llama.cpp; B2 model choice at 2, 4 and 7 GB memory budgets; B3 an offline agent loop of about 20 tasks with and without a network; B4 eco, normal and boost power modes. Raw results and figures will be published on this page when the runs are complete. Each figure states the machine it was measured on.</p>
+    <!-- COMPONENT: results-slot (F1 to F4, always empty) -->
+    <div class="slots">
+      <figure class="slot"><svg viewBox="0 0 480 300" role="img" aria-labelledby="t-V9_results_slot-1 d-V9_results_slot-1" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V9_results_slot-1">Empty results slot</title>
+<desc id="d-V9_results_slot-1">A dashed empty frame labelled Results to come. It stays empty until real result files exist.</desc>
+<rect x="3" y="3" width="474" height="294" rx="12" fill="#F5F3EE" stroke="#4A4A45" stroke-width="3" stroke-dasharray="10 8"/>
+<text x="240" y="160" font-size="24" font-weight="600" fill="#4A4A45" text-anchor="middle">Results to come</text>
+</svg><figcaption>F1</figcaption></figure>
+      <figure class="slot"><svg viewBox="0 0 480 300" role="img" aria-labelledby="t-V9_results_slot-2 d-V9_results_slot-2" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V9_results_slot-2">Empty results slot</title>
+<desc id="d-V9_results_slot-2">A dashed empty frame labelled Results to come. It stays empty until real result files exist.</desc>
+<rect x="3" y="3" width="474" height="294" rx="12" fill="#F5F3EE" stroke="#4A4A45" stroke-width="3" stroke-dasharray="10 8"/>
+<text x="240" y="160" font-size="24" font-weight="600" fill="#4A4A45" text-anchor="middle">Results to come</text>
+</svg><figcaption>F2</figcaption></figure>
+      <figure class="slot"><svg viewBox="0 0 480 300" role="img" aria-labelledby="t-V9_results_slot-3 d-V9_results_slot-3" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V9_results_slot-3">Empty results slot</title>
+<desc id="d-V9_results_slot-3">A dashed empty frame labelled Results to come. It stays empty until real result files exist.</desc>
+<rect x="3" y="3" width="474" height="294" rx="12" fill="#F5F3EE" stroke="#4A4A45" stroke-width="3" stroke-dasharray="10 8"/>
+<text x="240" y="160" font-size="24" font-weight="600" fill="#4A4A45" text-anchor="middle">Results to come</text>
+</svg><figcaption>F3</figcaption></figure>
+      <figure class="slot"><svg viewBox="0 0 480 300" role="img" aria-labelledby="t-V9_results_slot-4 d-V9_results_slot-4" font-family="Inter, system-ui, sans-serif" >
+<title id="t-V9_results_slot-4">Empty results slot</title>
+<desc id="d-V9_results_slot-4">A dashed empty frame labelled Results to come. It stays empty until real result files exist.</desc>
+<rect x="3" y="3" width="474" height="294" rx="12" fill="#F5F3EE" stroke="#4A4A45" stroke-width="3" stroke-dasharray="10 8"/>
+<text x="240" y="160" font-size="24" font-weight="600" fill="#4A4A45" text-anchor="middle">Results to come</text>
+</svg><figcaption>F4</figcaption></figure>
+    </div>
+    <p>Results will be published here when the runs are complete. <span class="btn is-disabled raw" aria-disabled="true">Raw data (not yet available)</span></p>
+
+    <h3>Models and licences</h3>
+    <table class="tbl"><caption class="sr">Models and licences</caption><thead><tr><th scope="col">Model</th><th scope="col">Licence</th></tr></thead><tbody>
+      <tr><th scope="row">Qwen2.5-1.5B-Instruct</th><td data-label="Licence">Apache 2.0 (checked on the model card, 17 Oct 2026)</td></tr>
+      <tr><th scope="row">Phi-3.5-mini-instruct (3.8B)</th><td data-label="Licence">MIT (checked on the model card, 17 Oct 2026)</td></tr>
+      <tr><th scope="row">Qwen2.5-7B-Instruct</th><td data-label="Licence">Apache 2.0 (checked on the model card, 17 Oct 2026)</td></tr>
+      <tr><th scope="row">llama.cpp</th><td data-label="Licence">MIT (project page)</td></tr>
+    </tbody></table>
+    <div class="btns">
+      <a class="btn btn-primary" data-repo href="">Open the repository</a>
+      <span class="btn btn-outline is-disabled" aria-disabled="true"><!-- GUIDE -->Run it yourself (guide)</span>
+      <span class="btn btn-outline is-disabled" aria-disabled="true"><!-- NOTES -->Read the design notes</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 12: What's next (#next) -->
+<section id="next" class="alt" aria-labelledby="h-next">
+  <div class="wrap">
+    <span class="label">What's next</span>
+    <h2 id="h-next">What's next</h2>
+    <!-- COMPONENT: timeline (status = shape plus text) -->
+    <ol class="timeline">
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="Done"><circle cx="11" cy="11" r="9" fill="#0B0B0B"/><path d="M6.5 11.5 L9.5 14.5 L15.5 8" fill="none" stroke="#F5F3EE" stroke-width="2"/></svg></span><div><h3>Concept</h3><p>Done: the abstract was accepted at BUILD26.</p></div></li>
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="In progress"><circle cx="11" cy="11" r="9" fill="#F5F3EE" stroke="#0B0B0B" stroke-width="2"/><path d="M11 2 A9 9 0 0 1 11 20 Z" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/></svg></span><div><h3>Research and architecture</h3><p>In progress: node sizes, specifications and the layers of the shared stack.</p></div></li>
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="Built"><rect x="3" y="3" width="16" height="16" fill="#F2A900" stroke="#0B0B0B" stroke-width="2"/></svg></span><div><h3>Reference software</h3><p>Built; real benchmark results to follow.</p></div></li>
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="Next"><path d="M3 11 H17 M12 5 L18 11 L12 17" fill="none" stroke="#0B0B0B" stroke-width="2"/></svg></span><div><h3>Prototype on existing hardware</h3><p>Next: simulate and prototype the architecture.</p></div></li>
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="Next"><path d="M3 11 H17 M12 5 L18 11 L12 17" fill="none" stroke="#0B0B0B" stroke-width="2"/></svg></span><div><h3>Pilot with an institution</h3><p>Next.</p></div></li>
+      <li><span class="st"><svg width="28" height="28" viewBox="0 0 22 22" role="img" aria-label="Open"><circle cx="11" cy="11" r="9" fill="none" stroke="#0B0B0B" stroke-width="2" stroke-dasharray="4 3"/></svg></span><div><h3>Partners to produce the architecture</h3><p>Open: we are looking for chip and infrastructure partners.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- SECTION 13: Partner with us (#partner) -->
+<section id="partner" class="dark on-dark" aria-labelledby="h-partner">
+  <div class="wrap">
+    <span class="label">Partner</span>
+    <h2 id="h-partner">We are looking for partners</h2>
+    <p class="lead">ECAPs depends on collaboration with chip and compute infrastructure providers, not as competitors to central infrastructure but as partners extending its value into last-mile access, new markets and new demand.</p>
+    <div class="cols-2 gap-top">
+      <div><h3 class="first">Who we want to talk to</h3>
+        <ul class="marks"><li>Chip makers and hardware manufacturers.</li><li>Compute and infrastructure providers.</li><li>Institutions and builders who want to host a node.</li></ul></div>
+      <div><h3 class="first">What we would ask</h3>
+        <ul class="marks"><li>Co-design a reference edge module that puts memory capacity and memory bandwidth per watt first, with DC and solar-ready power input.</li><li>Supply and pilot access: developer units and help with memory supply for pilots.</li><li>Software and testing support so open models run well on the chosen chip, and a clear path for nodes to call central compute when connected.</li></ul></div>
+    </div>
+    <p class="talk">Let's talk.</p>
+    <p>benedictisaac258@gmail.com or +234 904 837 7499.</p>
+    <div class="btns"><a class="btn btn-primary" href="mailto:benedictisaac258@gmail.com">Email Benedict</a><a class="btn btn-outline" href="tel:+2349048377499">Call</a></div>
+  </div>
+</section>
+
+<!-- SECTION 14: Research and sources (#sources) -->
+<section id="sources" aria-labelledby="h-sources">
+  <div class="wrap src">
+    <span class="label">Sources</span>
+    <h2 id="h-sources">Research and sources</h2>
+    <!-- COMPONENT: sources-table -->
+    <table class="tbl"><caption class="sr">Sources</caption><thead><tr><th scope="col">Source</th><th scope="col">Used for</th></tr></thead><tbody>
+      <tr><th scope="row">World Bank, Africa Economic Update, October 2026</th><td data-label="Used for">18%, 0.6% and 5% figures</td></tr>
+      <tr><th scope="row"><a href="https://arxiv.org/abs/2507.16731" target="_blank" rel="noopener">Collaborative Inference and Learning between Edge SLMs and Cloud LLMs: A Survey</a> (arXiv 2507.16731, 2025)</th><td data-label="Used for">Edge and cloud collaboration patterns</td></tr>
+      <tr><th scope="row">Edge Computing: Vision and Challenges (IEEE Internet of Things Journal, 2016)</th><td data-label="Used for">Definition and reasons for edge computing</td></tr>
+      <tr><th scope="row"><a href="https://arxiv.org/abs/2409.00088" target="_blank" rel="noopener">On-Device Language Models: A Comprehensive Review</a> (arXiv 2409.00088)</th><td data-label="Used for">Model compression and on-device inference</td></tr>
+      <tr><th scope="row">Prefill vs Decode: LLM Inference Phases Explained (Redis); Why LLM Decoding Is Memory-Bound (DEV Community)</th><td data-label="Used for">Why text generation is memory-bound</td></tr>
+      <tr><th scope="row"><a href="https://arxiv.org/abs/1707.06898" target="_blank" rel="noopener">Community Networks and Sustainability: a Survey</a> (arXiv 1707.06898)</th><td data-label="Used for">Lessons for shared infrastructure</td></tr>
+      <tr><th scope="row">Research ICT Africa, Beyond fairness: why justice should guide Africa's AI future (2 July 2026)</th><td data-label="Used for">Tech Justice framing</td></tr>
+      <tr><th scope="row">The Conversation, How a rural community built South Africa's first ISP owned and run by a cooperative (Zenzeleni)</th><td data-label="Used for">Community-run network example</td></tr>
+      <tr><th scope="row"><a href="https://github.com/ggml-org/llama.cpp" target="_blank" rel="noopener">llama.cpp</a> (github.com/ggml-org/llama.cpp)</th><td data-label="Used for">Inference engine, MIT licence</td></tr>
+      <tr><th scope="row"><a href="https://github.com/ggml-org/llama.cpp/discussions/4167" target="_blank" rel="noopener">llama.cpp discussion #4167, Performance of llama.cpp on Apple Silicon M-series</a> (Llama 2 7B, 4-bit)</th><td data-label="Used for">Measured bandwidth and speed in section 6 and on the poster</td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+<!-- SECTION 15: FAQ (#faq) -->
+<section id="faq" class="alt" aria-labelledby="h-faq">
+  <div class="wrap">
+    <span class="label">FAQ</span>
+    <h2 id="h-faq">FAQ</h2>
+    <!-- COMPONENT: accordion (native details) -->
+    <div class="faq">
+      <details><summary>Does ECAPs replace the cloud?</summary><div class="ans"><p>No. It is a complementary layer. Nodes run models locally and call larger cloud models when they need to.</p></div></details>
+      <details><summary>Do I need internet to use a node?</summary><div class="ans"><p>No for local work. The node runs the model, the agent loop and local users offline. A connection is used for heavy tasks, updates and remote monitoring.</p></div></details>
+      <details><summary>Why not just a Raspberry Pi?</summary><div class="ans"><p>A Raspberry Pi is a good general board. An ECAPs Node is meant to be a complete, managed edge-AI package: reference hardware, preloaded local models, firmware and software to host and manage it, and a solar-ready power design.</p></div></details>
+      <details><summary>Are you building a chip?</summary><div class="ans"><p>We are researching and choosing a compute architecture, and plan to partner with an existing provider to produce it.</p></div></details>
+      <details><summary>Who runs a shared node?</summary><div class="ans"><p>ECAPs manages it. It does not own it. Users pay per use.</p></div></details>
+      <details><summary>Who can get a node?</summary><div class="ans"><p>Anyone: homes, institutions and builders. We expect institutions to use it first.</p></div></details>
+      <details><summary>Can it run local-language models?</summary><div class="ans"><p>Yes, that is the plan. Local-language models can run on the same node, including optional support for N-ATLAS.</p></div></details>
+      <details><summary>What stage is ECAPs at?</summary><div class="ans"><p>Research and development. The design is proposed and the reference software is a prototype.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 16: About and contact (#contact) -->
+<section id="contact" aria-labelledby="h-contact">
+  <div class="wrap">
+    <span class="label">About and contact</span>
+    <h2 id="h-contact">About and contact</h2>
+    <p class="lead">ECAPs is researched and developed by Benedict Isaac, Researcher, ECAPs. The work began in robotics and engineering systems and grew into the question of how to extend AI infrastructure to the last mile.</p>
+    <!-- COMPONENT: contact-block -->
+    <ul class="contact">
+      <li><span class="k">Name</span><span>Benedict Isaac, Researcher, ECAPs</span></li>
+      <li><span class="k">Email</span><a href="mailto:benedictisaac258@gmail.com">benedictisaac258@gmail.com</a> <button type="button" class="btn btn-outline" id="copy-email">Copy email</button></li>
+      <li><span class="k">Phone</span><a href="tel:+2349048377499">+234 904 837 7499</a></li>
+      <li><span class="k">Website</span><a href="https://benedictisaac.dev" target="_blank" rel="noopener">benedictisaac.dev</a></li>
+      <li><span class="k">GitHub</span><a href="https://github.com/Benedict258" target="_blank" rel="noopener">Benedict258</a></li>
+      <li><span class="k">Project</span><a data-repo data-plain href="">Project repository</a></li>
+    </ul>
+    <p class="small muted" id="copy-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+</main>
+
+<!-- COMPONENT: site-footer -->
+<footer class="site-footer on-dark">
+  <div class="wrap"><svg viewBox="0 0 64 64" aria-hidden="true" font-family="Inter, system-ui, sans-serif" >
+<rect width="64" height="64" fill="#0B0B0B"/><path d="M54 22 V10 H10 V54 H54 V42" fill="none" stroke="#F5F3EE" stroke-width="6" stroke-linejoin="miter"/><rect x="24" y="24" width="16" height="16" fill="#F2A900"/>
+</svg><p>ECAPs, Edge Computing Agentic Processors. Research and development stage. Poster Build26/5P, BUILD26, Abuja.</p></div>
+</footer>
+
+<a class="to-top" id="to-top" href="#top" aria-label="Back to top" hidden><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17 V4 M4 10 L10 4 L16 10" fill="none" stroke="currentColor" stroke-width="2"/></svg></a>
+
+<script src="/site.js" defer></script>
+</body>
+</html>

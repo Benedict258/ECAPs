@@ -1,0 +1,13 @@
+:root{
+  --paper:#F5F3EE;
+  --ink:#0B0B0B;
+  --charcoal:#1A1A1A;
+  --rule:#D9D5CC;
+  --muted:#4A4A45;
+  --amber:#F2A900;
+  /* optional tints: hover and surfaces (paper-2), decorative drawings only (amber-soft) */
+  --paper-2:#ECE9E1;
+  --amber-soft:#FBE7B0;
+  --serif:"Newsreader","Source Serif 4",Georgia,serif;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+}

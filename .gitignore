@@ -7,3 +7,15 @@ bin/
 *.sqlite
 .venv/
 results_dummy/
+
+# Page build
+site/dist/
+site/.vercel/
+.vercel/
+node_modules/
+docs/page-brief/screenshots_local/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*

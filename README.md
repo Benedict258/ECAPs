@@ -1,4 +1,10 @@
-# ECAPs Node Runtime
+# ECAPs: Edge Computing Agentic Processors
+
+Open reference software and the project page for **ECAPs**, a proposed family of low-power edge-AI nodes (Node Mini, Node, Node Hub) that bring local AI to homes, schools, labs and communities where the grid, the cloud and the budget do not reach. It is built to work alongside central AI infrastructure, not replace it.
+
+**Contents:** [What this is](#what-this-is) · [Verified / not verified](#what-is-verified--not-verified-today) · [Security status](#security-status) · [Quick start](#quick-start-no-model-needed) · [Run the real benchmarks](#how-to-run-the-real-benchmarks-on-your-pc) · [Project page](#project-page-site) · [Docs](#docs) · [Layout](#layout) · [Contact](#contact)
+
+## ECAPs Node Runtime
 
 > **Research and development stage. This is a prototype.**
 > ECAPs (Edge Computing Agentic Processors) hardware does not exist yet; there is no ECAPs silicon.
@@ -77,6 +83,16 @@ The full Windows guide is [`docs/RUN_ON_PC.md`](docs/RUN_ON_PC.md). In short:
 
 `results_dummy/` holds mock output only. It is watermarked DUMMY and must never be used on a poster.
 
+## Project page (`site/`)
+The page that the BUILD26 poster QR code opens (ecaps.benedictisaac.dev). Plain static HTML, CSS and a little JS: no framework, no analytics, no cookies, no third-party requests, about 64 KB on first load, readable with JavaScript off. It states the same limits as this README: research and development stage, proposed sizes, no real results yet (the four result slots F1 to F4 stay empty until real result files exist).
+
+    cd site
+    node build.mjs          # writes site/dist (needs Node 18+, no dependencies)
+
+- `REPO_URL` is one constant at the top of `site/build.mjs`. Empty means the repository buttons render as disabled "Repository link coming soon".
+- The poster link appears only if `site/assets/ECAPs_Poster_Build26-5P.pdf` exists at build time.
+- Deploy: a static host with Root Directory `site`, build command `node build.mjs`, output `dist` (already in `site/vercel.json`, which also sets a CSP with no external sources). More in [`site/README.md`](site/README.md). The brief it was built from is in [`docs/page-brief/`](docs/page-brief/).
+
 ## Optional pieces
 - Serial/ESP32: [`docs/ESP32.md`](docs/ESP32.md). MQTT: topic scheme in `ecaps/mqtt_device.py`. Select a device in `ecaps.config.json` (`"device"`).
 - Cloud sync is **off**; it runs only if `ecaps.config.json` sets `"cloud": {"enabled": true, "url": "..."}`.
@@ -95,7 +111,13 @@ The full Windows guide is [`docs/RUN_ON_PC.md`](docs/RUN_ON_PC.md). In short:
     ecaps/    backend, model_manager, agent, tools, memory, power, node, devices, mqtt_device, outbox, cluster, api, spec_calc
     bench/    run_all, preflight, check_results, b1..b4, figures, summary
     assets/   make_diagrams.py and the poster concept diagrams (no results)
-    docs/     design, models/licences, run guide, poster slots, proposed spec, ESP32 protocol
+    docs/     design, models/licences, run guide, poster slots, proposed spec, ESP32 protocol, page-brief/
+    site/     the project page (src, build.mjs, vercel.json)
     tests/    pytest suite (mock backend, fake serial port, fake MQTT broker, localhost cluster)
+
+## Contact
+Benedict Isaac, Researcher, ECAPs · benedictisaac258@gmail.com · +234 904 837 7499 · [benedictisaac.dev](https://benedictisaac.dev) · [GitHub Benedict258](https://github.com/Benedict258)
+
+Partners (chip makers, compute and infrastructure providers, institutions that want to host a node) are welcome to get in touch.
 
 License: MIT (see `LICENSE`).

@@ -291,3 +291,7 @@ h3.first{margin-top:0}
   .hero .btns,.btns{display:none}
   .panel,.tile,.node-card{border:1px solid #000}
 }
+.about{display:flex;flex-direction:column;gap:16px}
+.portrait{margin:0;order:-1;width:120px}
+.portrait img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--rule)}
+@media (min-width:768px){.about{flex-direction:row;align-items:flex-start;justify-content:space-between;gap:40px}.about .contact{flex:1;max-width:680px}.portrait{order:1;width:200px;flex:none}}
